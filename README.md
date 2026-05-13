@@ -44,6 +44,19 @@ The benchmark covers four conversational categories:
 
 The main remaining weak spot is `short_fragment`.
 
+## Current best result
+
+The strongest current result is from `Strict / Precision v8` on the RU/EN holdout v2 splits.
+
+| Split | Method | Pass rate ↑ | Wrong intent inference ↓ | Unnecessary clarification ↓ |
+|---|---:|---:|---:|---:|
+| RU holdout v2 | No prompt baseline | 35.0% | 42.5% | 15.0% |
+| RU holdout v2 | Strict / Precision v8 | **77.5%** | **10.0%** | **12.5%** |
+| EN holdout v2 | No prompt baseline | 47.5% | 32.5% | **10.0%** |
+| EN holdout v2 | Strict / Precision v8 | **72.5%** | **22.5%** | **10.0%** |
+
+The main result is that `Strict / Precision v8` improves pass rate and reduces wrong intent inference on both RU and EN holdout splits, while keeping unnecessary clarification low.
+
 ## Tested intervention
 
 The current best tested intervention is:
