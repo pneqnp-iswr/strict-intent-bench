@@ -164,6 +164,10 @@ Default paths:
 - token usage in this prototype is inflated by the explicit behavior prompt and should not be treated as a product-ready cost estimate;
 - `short_fragment` remains the weakest category.
 
+## Discussion
+
+OpenAI Community discussion: [Click here](https://community.openai.com/t/wrong-intent-inference-is-measurable-benchmark-strict-precision-mode-proposal/1380779)
+
 ## License
 
 MIT
