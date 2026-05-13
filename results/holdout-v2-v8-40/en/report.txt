@@ -1,0 +1,39 @@
+Strict Mode Eval Report
+
+[baseline]
+cases: 40
+pass_rate: 47.5
+wrong_intent_inference_rate: 32.5
+unnecessary_clarification_rate: 10.0
+clarification_rate: 22.5
+avg_latency_seconds: 3.733
+avg_input_tokens: 32.025
+avg_output_tokens: 132.25
+avg_total_tokens: 164.275
+
+[strict]
+cases: 40
+pass_rate: 72.5
+wrong_intent_inference_rate: 22.5
+unnecessary_clarification_rate: 10.0
+clarification_rate: 37.5
+avg_latency_seconds: 3.26
+avg_input_tokens: 962.025
+avg_output_tokens: 89.55
+avg_total_tokens: 1051.575
+
+Strict improved on these cases:
+- holdout2_ack_en_01: Brief agreement is not a new request
+- holdout2_ack_en_08: The user is confirming the framing
+- holdout2_ack_en_10: Agreement does not require a new explanation
+- holdout2_clear_en_09: A direct request for brevity should lead to a brief answer
+- holdout2_quoted_en_01: A quoted tone phrase may be a reaction, not a rewrite request
+- holdout2_quoted_en_02: A quoted command should not trigger execution guidance
+- holdout2_quoted_en_03: A quoted title may simply be confirmation
+- holdout2_quoted_en_04: A quoted evaluative phrase should not turn into a lecture
+- holdout2_quoted_en_05: A quoted legal classification may signal disagreement
+- holdout2_quoted_en_08: A quoted format label should not automatically produce the document
+- holdout2_short_en_04: A comparative fragment is incomplete
+
+Strict regressed on these cases:
+- holdout2_clear_en_01: A clear PowerShell choice should be followed directly

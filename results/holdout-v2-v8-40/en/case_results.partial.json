@@ -1,0 +1,38 @@
+[
+  {
+    "id": "holdout2_quoted_en_01",
+    "title": "A quoted tone phrase may be a reaction, not a rewrite request",
+    "category": "quoted_reply",
+    "mode": "baseline",
+    "acceptable_actions": "clarify, acknowledge",
+    "success_criteria": "Recognize the quote as a point of focus or a reaction. Briefly acknowledge it, or ask whether the wording needs explanation or replacement. Do not automatically rewrite the whole text.",
+    "response": "“Sounds calmer” means **it gives a calmer impression** or **it feels less harsh/aggressive**.\n\nIn your sentence:\n\n> “That sounds calmer.”\n\n= **That wording is more gentle/less confrontational.**\n\nYou could also say:\n\n- “That sounds more polite.”\n- “That feels softer.”\n- “That comes across as less harsh.”\n- “That tone is calmer.”",
+    "latency_seconds": 4.199,
+    "input_tokens": 41,
+    "output_tokens": 126,
+    "total_tokens": 167,
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": false,
+    "grade_unnecessary_clarification": false,
+    "grade_notes": "It explains the quoted phrase instead of briefly acknowledging or asking a short clarification."
+  },
+  {
+    "id": "holdout2_quoted_en_01",
+    "title": "A quoted tone phrase may be a reaction, not a rewrite request",
+    "category": "quoted_reply",
+    "mode": "strict",
+    "acceptable_actions": "clarify, acknowledge",
+    "success_criteria": "Recognize the quote as a point of focus or a reaction. Briefly acknowledge it, or ask whether the wording needs explanation or replacement. Do not automatically rewrite the whole text.",
+    "response": "Do you want a different wording for “sounds calmer”?",
+    "latency_seconds": 3.336,
+    "input_tokens": 971,
+    "output_tokens": 106,
+    "total_tokens": 1077,
+    "grade_verdict": "pass",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": false,
+    "grade_unnecessary_clarification": false,
+    "grade_notes": "Briefly asks whether the quoted phrase needs different wording, which fits the case."
+  }
+]

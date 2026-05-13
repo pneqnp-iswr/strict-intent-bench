@@ -1,0 +1,38 @@
+{
+  "baseline": {
+    "quoted_reply": {
+      "cases": 10,
+      "pass_rate": 0
+    },
+    "short_fragment": {
+      "cases": 10,
+      "pass_rate": 10
+    },
+    "acknowledgment_or_correction": {
+      "cases": 10,
+      "pass_rate": 60
+    },
+    "clear_direct": {
+      "cases": 10,
+      "pass_rate": 30
+    }
+  },
+  "strict": {
+    "quoted_reply": {
+      "cases": 10,
+      "pass_rate": 90
+    },
+    "short_fragment": {
+      "cases": 10,
+      "pass_rate": 60
+    },
+    "acknowledgment_or_correction": {
+      "cases": 10,
+      "pass_rate": 90
+    },
+    "clear_direct": {
+      "cases": 10,
+      "pass_rate": 30
+    }
+  }
+}

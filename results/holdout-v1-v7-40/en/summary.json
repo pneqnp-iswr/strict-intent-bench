@@ -1,0 +1,24 @@
+{
+  "baseline": {
+    "cases": 40,
+    "pass_rate": 25.0,
+    "wrong_intent_inference_rate": 45.0,
+    "unnecessary_clarification_rate": 20.0,
+    "clarification_rate": 22.5,
+    "avg_latency_seconds": 4.062,
+    "avg_input_tokens": 29.85,
+    "avg_output_tokens": 148.95,
+    "avg_total_tokens": 178.8
+  },
+  "strict": {
+    "cases": 40,
+    "pass_rate": 55.0,
+    "wrong_intent_inference_rate": 20.0,
+    "unnecessary_clarification_rate": 15.0,
+    "clarification_rate": 35.0,
+    "avg_latency_seconds": 3.209,
+    "avg_input_tokens": 959.85,
+    "avg_output_tokens": 94.725,
+    "avg_total_tokens": 1054.575
+  }
+}

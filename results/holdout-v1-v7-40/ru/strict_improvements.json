@@ -1,0 +1,78 @@
+﻿[
+    {
+        "id": "holdout_ack_en_01",
+        "title": "Brief agreement is not a new request"
+    },
+    {
+        "id": "holdout_ack_en_04",
+        "title": "A simple \u0027exactly\u0027 is just confirmation"
+    },
+    {
+        "id": "holdout_ack_en_05",
+        "title": "A corrected term should simply be accepted"
+    },
+    {
+        "id": "holdout_ack_en_10",
+        "title": "The user is confirming the framing"
+    },
+    {
+        "id": "holdout_clear_en_07",
+        "title": "A clear request for email format should be followed directly"
+    },
+    {
+        "id": "holdout_quoted_en_01",
+        "title": "A quoted tone word may be a point of focus, not a rewrite request"
+    },
+    {
+        "id": "holdout_quoted_en_02",
+        "title": "A risk-related quote should not trigger execution"
+    },
+    {
+        "id": "holdout_quoted_en_03",
+        "title": "A strongly worded quote may just be a reaction"
+    },
+    {
+        "id": "holdout_quoted_en_05",
+        "title": "A quoted classification may signal disagreement"
+    },
+    {
+        "id": "holdout_quoted_en_06",
+        "title": "A quoted short phrase with ambiguous punctuation needs clarification"
+    },
+    {
+        "id": "holdout_quoted_en_07",
+        "title": "A quoted evaluation term should not trigger a long analysis"
+    },
+    {
+        "id": "holdout_quoted_en_08",
+        "title": "A quoted title may simply be confirmation"
+    },
+    {
+        "id": "holdout_quoted_en_09",
+        "title": "A quoted price-related phrase may just be a point of focus"
+    },
+    {
+        "id": "holdout_quoted_en_10",
+        "title": "A quoted command should not trigger execution guidance"
+    },
+    {
+        "id": "holdout_short_en_02",
+        "title": "A single metric without a task needs clarification"
+    },
+    {
+        "id": "holdout_short_en_04",
+        "title": "A day-of-week fragment is ambiguous"
+    },
+    {
+        "id": "holdout_short_en_08",
+        "title": "A comparative fragment is incomplete"
+    },
+    {
+        "id": "holdout_short_en_09",
+        "title": "A brief \u0027that\u0027s not right\u0027 does not specify the correction"
+    },
+    {
+        "id": "holdout_short_en_10",
+        "title": "A topic alone is not a request for a lecture"
+    }
+]

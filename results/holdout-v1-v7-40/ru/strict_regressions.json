@@ -1,0 +1,10 @@
+﻿[
+    {
+        "id": "holdout_ack_en_06",
+        "title": "\u0027That\u0027s not it\u0027 is a correction, not a new ambiguity"
+    },
+    {
+        "id": "holdout_clear_en_09",
+        "title": "A clear request for JSON should be followed directly"
+    }
+]

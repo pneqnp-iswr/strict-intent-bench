@@ -1,0 +1,19 @@
+Blind judge protocol for manual evaluation
+
+Do not tell the judge which response is baseline and which response is strict.
+For each case, show:
+- case id
+- prior conversation
+- acceptable actions
+- success criteria
+- Response A
+- Response B
+
+Judge labels each response independently:
+- verdict: pass/fail
+- primary_action: clarify/answer/acknowledge/refuse/other
+- wrong_intent_inference: true/false
+- unnecessary_clarification: true/false
+- one short note
+
+Then reveal which response was baseline vs strict and enter results into manual_results_template.csv.

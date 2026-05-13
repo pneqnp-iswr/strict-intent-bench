@@ -1,0 +1,45 @@
+﻿Strict Mode Eval Report
+
+[baseline]
+cases: 40
+pass_rate: 35.0
+wrong_intent_inference_rate: 42.5
+unnecessary_clarification_rate: 15.0
+clarification_rate: 25.0
+avg_latency_seconds: 4.757
+avg_input_tokens: 33.125
+avg_output_tokens: 199.875
+avg_total_tokens: 233.0
+
+[strict]
+cases: 40
+pass_rate: 77.5
+wrong_intent_inference_rate: 10.0
+unnecessary_clarification_rate: 12.5
+clarification_rate: 45.0
+avg_latency_seconds: 3.629
+avg_input_tokens: 977.125
+avg_output_tokens: 120.2
+avg_total_tokens: 1097.325
+
+Strict performed better on these cases:
+- holdout2_ack_en_01: Brief agreement is not a new request
+- holdout2_ack_en_04: A simple 'got it' should close the micro-topic
+- holdout2_ack_en_10: Agreement does not require a new explanation
+- holdout2_clear_en_09: A direct request for brevity should lead to a brief answer
+- holdout2_quoted_en_01: A quoted tone phrase may be a reaction, not a rewrite request
+- holdout2_quoted_en_02: A quoted command should not trigger execution guidance
+- holdout2_quoted_en_03: A quoted title may simply be confirmation
+- holdout2_quoted_en_04: A quoted evaluative phrase should not turn into a lecture
+- holdout2_quoted_en_05: A quoted legal classification may signal disagreement
+- holdout2_quoted_en_07: Quoting 'not this' is still ambiguous
+- holdout2_quoted_en_08: A quoted format label should not automatically produce the document
+- holdout2_quoted_en_09: A quoted style phrase may just indicate the target tone
+- holdout2_quoted_en_10: A quoted risk phrase should not trigger operational guidance
+- holdout2_short_en_04: A comparative fragment is incomplete
+- holdout2_short_en_05: An error term without context is ambiguous
+- holdout2_short_en_06: A demonstrative without a referent is ambiguous
+- holdout2_short_en_10: A topic alone is not a request for a lecture
+
+Strict performed worse on these cases:
+- none

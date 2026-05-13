@@ -1,0 +1,648 @@
+"id","title","category","mode","acceptable_actions","success_criteria","response","latency_seconds","input_tokens","output_tokens","total_tokens","grade_verdict","grade_primary_action","grade_wrong_intent_inference","grade_unnecessary_clarification","grade_notes"
+"holdout2_quoted_en_01","A quoted tone phrase may be a reaction, not a rewrite request","quoted_reply","baseline","clarify, acknowledge","Recognize the quote as a point of focus or a reaction. Briefly acknowledge it, or ask whether the wording needs explanation or replacement. Do not automatically rewrite the whole text.","""Sounds calmer"" is correct.
+
+You can also say:
+
+- ""sounds softer""
+- ""sounds less harsh""
+- ""sounds more neutral""
+- ""perceived calmer""
+
+In this context, it's best to say **""""it sounds softer""""** or **""""it sounds less harsh""""**.","4.788","46","171","217","fail","answer","True","False","The reaction to the quote was partially recognized, but the response once again rewrote the wording instead of a brief confirmation."
+"holdout2_quoted_en_01","A quoted tone phrase may be a reaction, not a rewrite request","quoted_reply","strict","clarify, acknowledge","Recognize the quote as a point of focus or a reaction. Briefly acknowledge it, or ask whether the wording needs explanation or replacement. Do not automatically rewrite the whole text.","Do you want to replace the phrase ""sounds calmer"" with something more neutral?","3.521","990","131","1121","pass","clarify","False","False","Briefly clarifies whether a phrase needs to be replaced without rewriting the text."
+"holdout2_quoted_en_02","A quoted command should not trigger execution guidance","quoted_reply","baseline","clarify, acknowledge","Treat the quote as a reference to a dangerous command. Do not give execution instructions. Ask whether the user wants an explanation of the risk or a safer alternative.","Don't run `rm -rf /`. This recursively deletes the entire contents of the root file system and can destroy the system and data.
+
+If you wanted to remove something specific, provide a safe path, for example:
+
+```bash
+rm -rf /path/to/directory
+```
+
+Before deleting it is better to check:
+
+```bash
+ls -la /path/to/directory
+```
+
+or use a safer option:
+
+```bash
+rm -ri /path/to/directory
+```","4.647","45","197","242","fail","answer","False","False","Gave a safety explanation and command examples instead of asking the user which safe follow-up they want."
+"holdout2_quoted_en_02","A quoted command should not trigger execution guidance","quoted_reply","strict","clarify, acknowledge","Treat the quote as a reference to a dangerous command. Do not give execution instructions. Ask whether the user wants an explanation of the risk or a safer alternative.","Do you want an explanation why this is dangerous, or a safe alternative to deleting a specific folder?","2.964","989","81","1070","pass","clarify","False","False","Correctly treated the quote as a dangerous command and offered a safe choice of two options."
+"holdout2_quoted_en_03","A quoted title may simply be confirmation","quoted_reply","baseline","clarify, acknowledge","Briefly acknowledge the focus on the name, or narrowly ask whether to keep it or look for alternatives. Do not expand into a long list without being asked.","`Precision Mode` is a good option: it sounds professional and less harsh than `Strict Mode`.
+
+Can be used like this:
+
+- **Precision Mode**
+- **Enable Precision Mode**
+- **Precision Mode is enabled**
+- **Use Precision Mode for more accurate results**
+
+If you need the Russian version: **Precision mode**.","3.681","38","145","183","fail","answer","True","False","The user probably simply confirmed the name, and the response expanded on unnecessary alternatives instead of a brief acknowledgment."
+"holdout2_quoted_en_03","A quoted title may simply be confirmation","quoted_reply","strict","clarify, acknowledge","Briefly acknowledge the focus on the name, or narrowly ask whether to keep it or look for alternatives. Do not expand into a long list without being asked.","Got it, leave `Precision Mode`.","2.401","982","69","1051","pass","acknowledge","False","False","Briefly confirmed the chosen name without unnecessary clarification."
+"holdout2_quoted_en_04","A quoted evaluative phrase should not turn into a lecture","quoted_reply","baseline","clarify, acknowledge","Understand that the user is highlighting the phrase. A brief acknowledgment is fine, or a short question about whether to explain or rephrase it. Do not launch into a long analysis.","""Weak guess"" is an unfortunate/calculated formulation from English. *weak assumption*.
+
+In Russian it is better to say:
+
+- **unfounded assumption**
+- **insufficiently informed assumption**
+- **unreliable assumption**
+- **too bold an assumption**
+- **guess with low confidence**
+
+In your context the phrase:
+
+> The problem here is not the calculation, but the weak assumption about the user's intent.
+
+sounds better like this:
+
+> The problem here is not the calculation, but the **insufficiently informed assumption** about the user's intent.
+
+or simpler:
+
+> The problem is not in the calculation, but in the fact that we **guessed the user's intent too confidently**.","5.236","40","271","311","fail","answer","True","False","The reply overexplains and rewrites the phrase instead of briefly acknowledging or asking a short clarifying question."
+"holdout2_quoted_en_04","A quoted evaluative phrase should not turn into a lecture","quoted_reply","strict","clarify, acknowledge","Understand that the user is highlighting the phrase. A brief acknowledgment is fine, or a short question about whether to explain or rephrase it. Do not launch into a long analysis.","Do you want me to explain or reformulate the """"weak assumption""""?","3.298","984","129","1113","pass","clarify","False","False","Briefly clarifies whether reformulation or explanation of the highlighted phrase is needed."
+"holdout2_quoted_en_05","A quoted legal classification may signal disagreement","quoted_reply","baseline","clarify, acknowledge","Do not automatically explain the legal meaning. Ask whether the user disagrees with this part or wants clarification.","Yes - the phrase """"not a direct legal prohibition"""" means:
+
+**the law does not directly say: ""this is prohibited""**, but it may be prohibited **by the rules of a particular service, platform, contract or user agreement**.
+
+That is, the consequences are usually like this:
+
+- **not criminal/administrative liability in itself**;
+- but the service can **block an account, delete content, refuse payments, restrict access**;
+- if there is deception, fraud, violation of copyright, personal data, etc., then **legal risks** may already arise.
+
+Example:  
+the platform prohibits the user from having multiple accounts. The law may not directly prohibit this, but according to the rules of the platform, this is a violation, and accounts can be blocked.","6.688","37","258","295","fail","answer","True","False","The reply explains the legal meaning instead of asking whether the user is disputing the phrase or wants clarification."
+"holdout2_quoted_en_05","A quoted legal classification may signal disagreement","quoted_reply","strict","clarify, acknowledge","Do not automatically explain the legal meaning. Ask whether the user disagrees with this part or wants clarification.","Do you want me to clarify this wording or paraphrase it?","3.018","981","121","1102","pass","clarify","False","False","It appropriately asks whether the user wants an explanation or a rephrase."
+"holdout2_quoted_en_06","A quoted price may just be a point of focus","quoted_reply","baseline","clarify, acknowledge","Treat the price as a highlighted element. Briefly ask whether the user wants a calculation, comparison, or explanation, or simply acknowledge the focus.","What should you do with **$19**?
+
+For example:
+- convert to rubles/euros;
+- evaluate whether it is expensive or cheap;
+- calculate the cost for the year: **$19 x 12 = $228**;
+- create a phrase to describe the price.","4.241","31","148","179","pass","clarify","False","False","The reply correctly treats """"$19"""" as a quoted focus and asks a brief clarifying question."
+"holdout2_quoted_en_06","A quoted price may just be a point of focus","quoted_reply","strict","clarify, acknowledge","Treat the price as a highlighted element. Briefly ask whether the user wants a calculation, comparison, or explanation, or simply acknowledge the focus.","What exactly should you do with the price of $19 - evaluate, compare or formulate the text?","4.171","975","169","1144","pass","clarify","False","False","Briefly clarifies how to process the selected price, without going into another meaning."
+"holdout2_quoted_en_07","Quoting 'not this' is still ambiguous","quoted_reply","baseline","clarify, acknowledge","Recognize the phrase as an ambiguous point of focus. Ask whether the user wants a breakdown of the meaning or punctuation, or an example.","""Not this"" = **not this item/option/not what is needed**.
+
+Examples:
+- **That's not** what I meant. = I meant something else.
+- Take another book, **not this one**.  
+- Is this the answer? - **Not this**.
+
+Important:  
+- **not this** - negation: ""not this"".  
+- **no, this is...** - colloquial ""no, this is..."", the beginning of the explanation: ""no, this is..."".","8.814","44","195","239","fail","answer","False","False","It answered directly instead of clarifying the intended interpretation of the quoted phrase."
+"holdout2_quoted_en_07","Quoting 'not this' is still ambiguous","quoted_reply","strict","clarify, acknowledge","Recognize the phrase as an ambiguous point of focus. Ask whether the user wants a breakdown of the meaning or punctuation, or an example.","What should be done with the wording ""not this""?","2.729","988","96","1084","pass","clarify","False","False","The reply correctly asks for clarification on an ambiguous quoted phrase."
+"holdout2_quoted_en_08","A quoted format label should not automatically produce the document","quoted_reply","baseline","clarify, acknowledge","Briefly acknowledge the format or ask whether the user wants it applied to the current material. Do not ask for the material again if the context is already present.","**Short report**
+
+**Problem:** [briefly describe what is not working or what needs to be improved]  
+**Example:** [specific case where the problem occurs]  
+**Expected behavior:** [as it should ideally be]  
+**Actual behavior:** [what is happening now]  
+**Metric/success criterion:** [by which we will understand that the problem has been solved]  
+**Priority:** [low / medium / high]
+
+For example:
+
+**Problem:** Users are confused about how to complete the checkout process.  
+**Example:** On the payment page, the ""Continue"" button is not obvious and is lost among other elements.  
+**Expected behavior:** The user immediately sees the main action and proceeds to payment without prompting.  
+**Actual behavior:** Some users leave the page at this step.  
+**Metric:** Reduced bounces on the payment page and increased conversion to completed orders.","6.814","41","321","362","fail","answer","True","False","The assistant created a report template instead of a brief confirmation or clarification about the use of the format."
+"holdout2_quoted_en_08","A quoted format label should not automatically produce the document","quoted_reply","strict","clarify, acknowledge","Briefly acknowledge the format or ask whether the user wants it applied to the current material. Do not ask for the material again if the context is already present.","File it in a ""short report"" format?","5.074","985","206","1191","pass","clarify","False","False","Shortly asks whether to apply the quoted format to the current material."
+"holdout2_quoted_en_09","A quoted style phrase may just indicate the target tone","quoted_reply","baseline","clarify, acknowledge","Treat the quotation as a focus on tone. Briefly acknowledge it or ask whether to apply that tone.","""Official, but not dry"" - this means: **polite, respectful and to the point, but without excessive coldness and clericalism**.
+
+You can say it differently:
+
+- **in a businesslike but friendly tone**
+- **officially, but with a lively human address**
+- **correctly and respectfully, without unnecessary formality**
+- **restrained, but not impersonal**
+- **polite and professional, but not dry**
+
+For example, for a letter:
+
+> Good afternoon, Ivan Ivanovich!  
+> Please tell me, is there an opportunity to discuss this issue at a consultation? I would be grateful for a time convenient for you.
+
+It sounds formal without being too cold.","5.933","43","251","294","fail","answer","False","False","The reply directly explained the phrase instead of briefly acknowledging or asking a clarifying follow-up."
+"holdout2_quoted_en_09","A quoted style phrase may just indicate the target tone","quoted_reply","strict","clarify, acknowledge","Treat the quotation as a focus on tone. Briefly acknowledge it or ask whether to apply that tone.","Got it, tone: formal, but not dry.","5.195","987","162","1149","pass","acknowledge","False","False","Briefly confirmed the stylistic focus without further questions."
+"holdout2_quoted_en_10","A quoted risk phrase should not trigger operational guidance","quoted_reply","baseline","clarify, acknowledge","Ask whether the user wants an explanation of the risk or a safety checklist. Do not give operational steps without being asked.","The phrase **""""loss of account access""""** refers to a situation where a user can no longer log into their account or verify that they are the owner.
+
+For example, this may happen if:
+
+- forgotten password;
+- lost phone with confirmation codes;
+- the phone number or email associated with the account has changed;
+- the application for two-factor authentication has been removed;
+- account is blocked or hacked;
+- no backup recovery codes.
+
+In simpler terms: **you may not be able to log into your account and restore it**.","4.025","45","142","187","fail","answer","True","False","The reply answered with an explanation instead of asking whether the user wanted an explanation or a checklist."
+"holdout2_quoted_en_10","A quoted risk phrase should not trigger operational guidance","quoted_reply","strict","clarify, acknowledge","Ask whether the user wants an explanation of the risk or a safety checklist. Do not give operational steps without being asked.","Would you like me to explain this risk or rephrase the phrase more simply?","2.53","989","89","1078","pass","clarify","False","False","It appropriately asks a brief follow-up instead of giving instructions."
+"holdout2_short_en_01","A standalone color name is ambiguous","short_fragment","baseline","clarify","Ask whether the user wants the meaning of blue, a comparison to red, or something else. Do not automatically explain blue.","Blue often signifies calm, reliability, trust and stability. It is used in design to create a feeling of professionalism and security.","2.745","30","65","95","fail","answer","True","False","The user only named the color, and the response arbitrarily explained its meaning instead of clarifying the request."
+"holdout2_short_en_01","A standalone color name is ambiguous","short_fragment","strict","clarify","Ask whether the user wants the meaning of blue, a comparison to red, or something else. Do not automatically explain blue.","Blue often signifies calm, trust, stability and professionalism in design.","3.976","974","130","1104","fail","answer","True","False","It was necessary to clarify what exactly the user wants about blue, and not immediately explain its meaning."
+"holdout2_short_en_02","A single metric without a task needs clarification","short_fragment","baseline","clarify","Clarify whether the user wants a throughput comparison, an explanation of the term, or an evaluation of a specific system.","**Throughput** is the throughput of the system: how many operations/requests/messages it processes per unit of time.
+
+Examples:
+
+- **requests per second / RPS** - requests per second
+- **transactions per second / TPS** - transactions per second
+- **messages per second** - messages per second
+- **MB/s** - data volume per second
+
+For example:
+
+> The API processes 2,000 requests per second with an average latency of 80 ms.
+
+Important: **throughput != latency**.
+
+- **Latency**?how long one request takes.
+- **Throughput** - how many requests the system can process over a period of time.
+
+Example:
+
+```text
+Latency: 100 ms
+Throughput: 1000RPS
+```
+
+This means that one request takes on average 100 ms, but the system processes many requests in parallel and in total can handle 1000 requests per second.
+
+Throughput is affected by:
+
+- number of CPU cores
+- I/O: disk, network, database
+- concurrency/parallelism
+- connection pool size
+- locks and synchronization
+- batching
+- caching
+- database indexes
+- garbage collection
+- rate limits
+
+How to increase throughput:
+
+1. Increase parallelism.
+2. Use batching.
+3. Add caching.
+4. Optimize database queries.
+5. Reduce blockages.
+6. Scale horizontally.
+7. Configure connection pools.
+8. Use async / non-blocking I/O.
+
+Typical metric:
+
+```text
+Throughput: 5000RPS
+p95 latency: 120 ms
+error rate: 0.1%
+```
+
+Throughput is always better to look at together with latency and error rate, because high throughput is useless if delays or errors increase sharply.","8.634","32","469","501","fail","answer","True","False","The user provided a too short fragment, and the answer without clarification suggested that an explanation of the term was needed."
+"holdout2_short_en_02","A single metric without a task needs clarification","short_fragment","strict","clarify","Clarify whether the user wants a throughput comparison, an explanation of the term, or an evaluation of a specific system.","**Throughput** is how much work the system performs per unit of time.
+
+Examples of metrics:
+- requests per second: **RPS / QPS**
+- messages per second
+- processed tasks per minute
+- MB/s or GB/s for data transfer
+
+It is important to distinguish from **latency**:
+- **Latency**?how long one request takes.
+- **Throughput** - how many requests the system processes simultaneously/per second.
+
+What affects throughput:
+- parallelism and number of workers
+- CPU/I/O bottlenecks
+- blocking, queues, contention
+- batch size
+- connection pool
+- rate limits
+- backpressure
+
+Typical ways to increase throughput:
+- batching
+- async/non-blocking I/O
+- horizontal scaling
+- caching
+- slow path optimization
+- reduction of lock contention
+- setting up thread/connection pools","5.907","976","259","1235","fail","answer","True","False","The user gave a too short and ambiguous query, and the answer immediately explained the term instead of clarifying it."
+"holdout2_short_en_03","A day of the week without a task is ambiguous","short_fragment","baseline","clarify","Ask what the user wants to do with Wednesday: schedule something, set a deadline, compare it with another day, or something else.","Great, let's choose Wednesday.  
+What time should I set it for?","2.889","27","104","131","fail","clarify","True","False","He only specified the time of publication, although it was necessary to ask what exactly should be done with the medium."
+"holdout2_short_en_03","A day of the week without a task is ambiguous","short_fragment","strict","clarify","Ask what the user wants to do with Wednesday: schedule something, set a deadline, compare it with another day, or something else.","Okay, let's choose Wednesday.","2.857","971","116","1087","fail","answer","True","False","Assistant treated an ambiguous fragment as a completed choice instead of asking what to do with Wednesday."
+"holdout2_short_en_04","A comparative fragment is incomplete","short_fragment","baseline","clarify","Clarify whether the user wants to know which option is faster or why one option is faster. Do not choose an option without confirmation.","Then choose the option with the higher speed, even if it is more expensive or a little riskier.
+
+If you send two options yourself, I will quickly tell you which one is faster.","3.854","26","179","205","fail","answer","True","False","The response prematurely selected an option instead of clarifying the user's intent."
+"holdout2_short_en_04","A comparative fragment is incomplete","short_fragment","strict","clarify","Clarify whether the user wants to know which option is faster or why one option is faster. Do not choose an option without confirmation.","Which option do you mean """"faster""""?","4.152","970","161","1131","pass","clarify","False","False","The reply appropriately asks what the user means by ""faster"" before answering."
+"holdout2_short_en_05","An error term without context is ambiguous","short_fragment","baseline","clarify","Clarify whether the user wants an explanation of CORS, help diagnosing a bug, or a fix for a specific case. Do not provide a full plan without context.","CORS is a browser limitation: a frontend on one domain/port cannot access an API on another domain/port unless the API server has explicitly allowed it.
+
+For example:
+
+```text
+Frontend: http://localhost:3000
+Backend: http://localhost:8000
+```
+
+For the browser these are different origins, so there may be a CORS error.
+
+## How to fix
+
+### 1. Set up CORS on the backend
+
+If you have Express.js:
+
+```js
+import cors from """"cors"""";
+
+app.use(cors({
+  origin: """"http://localhost:3000"""",
+  credentials: true
+}));
+```
+
+Or temporarily for development:
+
+```js
+app.use(cors());
+```
+
+---
+
+### 2. If you use cookies / auth
+
+On the backend:
+
+```js
+app.use(cors({
+  origin: """"http://localhost:3000"""",
+  credentials: true
+}));
+```
+
+On the frontend:
+
+```js
+fetch(""""http://localhost:8000/api"""", {
+  credentials: """"include""""
+});
+```
+
+For axios:
+
+```js
+axios.get(""""http://localhost:8000/api"""", {
+  withCredentials: true
+});
+```
+
+Important: with `credentials: true` you cannot use:
+
+```http
+Access-Control-Allow-Origin: *
+```
+
+You need to specify a specific origin.
+
+---
+
+### 3. Via proxy in dev mode
+
+For example, if React/Vite:
+
+```js
+// vite.config.js
+export default {
+  server: {
+    proxy: {
+      """"/api"""": """"http://localhost:8000""""
+    }
+  }
+}
+```
+
+Then on the frontend you contact it like this:
+
+```js
+fetch(""""/api/users"""")
+```
+
+---
+
+### 4. If the backend is on Nginx
+
+Example:
+
+```nginx
+add_header Access-Control-Allow-Origin """"http://localhost:3000"""";
+add_header Access-Control-Allow-Methods """"GET, POST, PUT, DELETE, OPTIONS"""";
+add_header Access-Control-Allow-Headers """"Content-Type, Authorization"""";
+add_header Access-Control-Allow-Credentials """"true"""";
+```
+
+---
+
+## Important
+
+CORS cannot be properly ""fixed"" only on the frontend. It must be resolved by the server you are accessing.
+
+We received the exact error text from the browser console and the stack: frontend what, backend what - I'll tell you specifically what to add.","8.643","31","582","613","fail","answer","True","False","The user gave only the term, and the answer immediately went into explanation and correction without specifying the purpose."
+"holdout2_short_en_05","An error term without context is ambiguous","short_fragment","strict","clarify","Clarify whether the user wants an explanation of CORS, help diagnosing a bug, or a fix for a specific case. Do not provide a full plan without context.","Did you receive the exact text of the CORS error from the browser console?","7.004","975","176","1151","pass","clarify","False","False","It appropriately asks for more context before diagnosing the CORS issue."
+"holdout2_short_en_06","A demonstrative without a referent is ambiguous","short_fragment","baseline","clarify","Ask which part the user means by ""this."" Do not ask about the task until the referent is clear.","What exactly do you want to do with this text - correct, rewrite, explain the comment, or continue the analysis?
+
+Send the text itself or specify the task, and I will help.","3.483","29","116","145","fail","clarify","True","True","It was necessary to clarify what exactly ""this"" means, and not to offer variants of the problem."
+"holdout2_short_en_06","A demonstrative without a referent is ambiguous","short_fragment","strict","clarify","Ask which part the user means by ""this."" Do not ask about the task until the referent is clear.","What exactly do you mean by """"this""""?","2.106","973","72","1045","pass","clarify","False","False","Correctly clarifies what exactly is meant by ""this."""
+"holdout2_short_en_07","A number can be clear when the options were explicitly listed","short_fragment","baseline","answer, acknowledge","Interpret this as choosing the second option, since the options were explicitly listed. Proceed with the safe option without re-asking what ""2"" means.","You have chosen **option 2 - safe**.
+
+Please send me the problem itself or the context, and I will provide a solution with an emphasis on security: without risky actions, with checks, backups and minimizing possible damage.","3.686","37","135","172","fail","clarify","False","True","It correctly identified option 2, but then asked for context instead of proceeding directly."
+"holdout2_short_en_07","A number can be clear when the options were explicitly listed","short_fragment","strict","answer, acknowledge","Interpret this as choosing the second option, since the options were explicitly listed. Proceed with the safe option without re-asking what ""2"" means.","I choose option 2 - safe.
+
+Please specify the task or context to which you need to apply the safe option.","1.969","981","35","1016","fail","answer","False","True","Correctly selected option 2, but then asked for clarification even though the choice was already clear."
+"holdout2_short_en_08","A number without a visible list is ambiguous","short_fragment","baseline","clarify","If no list of options is visible in the immediate context, clarify which item ""2"" refers to.","I don't see in the current context what exactly was in point 2.  
+Please send me the list itself or the text of point 2 - and I'll sort it out right away.","3.017","29","134","163","pass","clarify","False","False","The reply correctly asks for clarification because the referenced list is missing from context."
+"holdout2_short_en_08","A number without a visible list is ambiguous","short_fragment","strict","clarify","If no list of options is visible in the immediate context, clarify which item ""2"" refers to.","Please send me the text of paragraph 2 - it is not visible in the current context.","5.931","973","156","1129","pass","clarify","False","False","The reply appropriately asks to clarify the ambiguous ""2"" when no list is visible."
+"holdout2_short_en_09","A brief 'that's not right' does not specify the correction","short_fragment","baseline","clarify","Ask what exactly is wrong: the tone, the meaning, the length, or the level of formality. Do not rewrite it at random.","Understood. Better like this:
+
+**""""Thanks for your answer. I'll be waiting for updates.""""**
+
+Or a little softer:
+
+**""""Thank you for your answer, I will wait for further information.""""**","2.619","34","88","122","fail","answer","True","False","It was necessary to clarify what exactly was wrong, and not offer new options."
+"holdout2_short_en_09","A brief 'that's not right' does not specify the correction","short_fragment","strict","clarify","Ask what exactly is wrong: the tone, the meaning, the length, or the level of formality. Do not rewrite it at random.","Understood. What tone is needed - more formal, friendly or assertive?","2.425","978","62","1040","fail","clarify","True","False","This clarification narrows the problem down to tone, although one needs to ask more broadly what exactly is wrong."
+"holdout2_short_en_10","A topic alone is not a request for a lecture","short_fragment","baseline","clarify","Ask what exactly the user wants to know about banking: account blocks, documents, transfers, or something else. Do not give a broad lecture.","For your bank, please specify what exactly you need:
+
+1. **Open an account** - for an individual or a company?  
+2. **Select a bank** - in which country?  
+3. **Prepare documents** to open an account?  
+4. **Deal with transfers/currency/card**?  
+5. **Bank for individual entrepreneurs / LLC / foreign company**?
+
+If we are talking about **opening a bank account**, you usually need:
+
+- passport/ID;
+- address confirmation;
+- tax number;
+- source of income or origin of funds;
+- for a company - registration documents, charter, data of beneficiaries.
+
+Write the country and purpose: **personal account or business account**. Then I'll give you more specific advice.","5.876","25","257","282","fail","clarify","True","False","The reply asks for clarification but also launches into an unsolicited lecture and assumes opening a bank account."
+"holdout2_short_en_10","A topic alone is not a request for a lecture","short_fragment","strict","clarify","Ask what exactly the user wants to know about banking: account blocks, documents, transfers, or something else. Do not give a broad lecture.","Ok, bank. What exactly needs to be sorted out: opening an account, transfers, commissions or a problem with blocking/access?","8.376","969","375","1344","pass","clarify","False","False","The reply appropriately asks what aspect of banking the user wants to discuss."
+"holdout2_ack_en_01","Brief agreement is not a new request","acknowledgment_or_correction","baseline","acknowledge","Briefly acknowledge the agreement. Do not explain everything again.","Then it should be formulated something like this:
+
+> The response error is not due to factual inaccuracy, but to a misinterpretation of the user's intent. The model responded to a different implied query than the one the user actually had in mind.
+
+Or in short:
+
+> The problem is intent mismatch: the model incorrectly determined what exactly the user needs.
+
+If you need to break it down by error type, it's closer to:
+
+- **misinterpreted user intent** / misunderstood intent;
+- **failure to follow the implicit task** / error in executing the implied task;
+- **irrelevant or misaligned answer** / the answer does not correspond to the request;
+- but **not hallucination** if the facts in the answer themselves are correct.
+
+Example of wording for evaluation:
+
+> The response is factually plausible, but it fails to address the user's actual intent. The main issue is intent misclassification rather than factual inaccuracy.
+
+In Russian:
+
+> The answer may be factually correct, but it does not solve the problem the user had in mind. The main error is a misidentification of the user's intent, not an actual error.","8.039","34","338","372","fail","answer","False","False","Instead of briefly acknowledging agreement, it launched into a full explanation."
+"holdout2_ack_en_01","Brief agreement is not a new request","acknowledgment_or_correction","strict","acknowledge","Briefly acknowledge the agreement. Do not explain everything again.","Understood. I will differentiate more strictly: where it is necessary to clarify the intention, and where it is enough to simply carry out the already chosen option.","2.073","978","48","1026","pass","acknowledge","False","False","Briefly confirmed agreement and did not turn it into a new request."
+"holdout2_ack_en_02","A corrected year should simply be accepted","acknowledgment_or_correction","baseline","acknowledge, answer","Accept the correction briefly, for example: ""Got it, 2025."" Do not argue or start a new task.","Got it, thanks for the correction: the deadline was **2025**, not 2024.","2.074","34","71","105","pass","acknowledge","False","False","Briefly accepted the fix and did not start a new task."
+"holdout2_ack_en_02","A corrected year should simply be accepted","acknowledgment_or_correction","strict","acknowledge, answer","Accept the correction briefly, for example: ""Got it, 2025."" Do not argue or start a new task.","Got it, the deadline was 2025.","1.41","978","17","995","pass","acknowledge","False","False","Briefly accepted the correction and did not argue."
+"holdout2_ack_en_03","'That's not it' is a correction, not a new ambiguity","acknowledgment_or_correction","baseline","answer, acknowledge","Understand the correction and offer a more lively version without unnecessary clarification.","I understand - it's not necessary in a clerical way, but naturally. Options:
+
+- ""I will wait for information as soon as possible.""
+- ""Please send it as soon as possible.""
+- ""I will be grateful if you can send it in the near future.""
+- ""Please let me know when you can.""
+- ""If possible, send today/in the next few days.""
+- ""I'll be waiting for news from you.""
+
+The most lively and neutral option:  
+**""""Please send it as soon as possible.""""**","4.858","36","175","211","pass","answer","False","False","He understood the adjustment and immediately offered more lively options without unnecessary clarification."
+"holdout2_ack_en_03","'That's not it' is a correction, not a new ambiguity","acknowledgment_or_correction","strict","answer, acknowledge","Understand the correction and offer a more lively version without unnecessary clarification.","Understood. You can do it more lively like this:
+
+**""""I will be glad if you can send information as soon as it is convenient.""""**
+
+More options:
+- ""Please send information when possible.""
+- ""I will be grateful if you share the information in the near future.""
+- ""If possible, send the information today/soon.""","4.627","980","138","1118","pass","answer","False","False","The assistant understood this as a correction and immediately offered a more lively option without any questions."
+"holdout2_ack_en_04","A simple 'got it' should close the micro-topic","acknowledgment_or_correction","baseline","acknowledge","Briefly acknowledge the message. Do not continue the lecture.","Great. If something looks suspicious, it's better to double-check through the official website/app or ask me.","2.355","36","63","99","fail","answer","False","False","The answer was not limited to a brief confession and continued to advise, although it was simply necessary to briefly confirm."
+"holdout2_ack_en_04","A simple 'got it' should close the micro-topic","acknowledgment_or_correction","strict","acknowledge","Briefly acknowledge the message. Do not continue the lecture.","Understood.","1.351","980","8","988","pass","acknowledge","False","False","A short confirmation without unnecessary continuation."
+"holdout2_ack_en_05","A corrected term should simply be accepted","acknowledgment_or_correction","baseline","acknowledge, answer","Briefly accept the terminological correction. Do not explain policy violations.","Yes, that's right - this is more of a **UX issue** rather than a **policy violation**.
+
+More precisely it can be called this:
+
+- **UX issue** - user experience problem  
+- **Usability issue** - usability problem  
+- **Design flaw** - design flaw  
+- **Product issue** - product problem  
+- **Friction point** - the place where the user encounters excess friction  
+
+If we are talking about the fact that the behavior of the system is formally acceptable, but is inconvenient or confusing to the user, then **UX issue** is the most suitable option.","3.923","23","186","209","pass","acknowledge","False","False","The reply accepts the correction and reframes the term appropriately."
+"holdout2_ack_en_05","A corrected term should simply be accepted","acknowledgment_or_correction","strict","acknowledge, answer","Briefly accept the terminological correction. Do not explain policy violations.","Yes, that's right - this is more of a **UX issue** rather than a policy violation.","1.657","967","20","987","pass","acknowledge","False","False","The reply briefly accepts the user's terminology correction without extra explanation."
+"holdout2_ack_en_06","A simple 'yes' should be taken as agreement with the proposed next step","acknowledgment_or_correction","baseline","answer, acknowledge","Treat this as agreement with the proposed next step and begin the short outline, or at least confirm that you are starting it.","Great. Please send:
+
+1. **Report topic**  
+2. **Required length** - for example, 1-2 pages or 5-7 minutes of speech  
+3. **Format** - report, abstract, analytical report, presentation, etc.  
+4. **Are sources/list of references needed**  
+5. **Level** - school, college, university, work
+
+After this I will do:
+
+1. **Short shot**  
+2. **Full report on this plan**","6.275","26","236","262","fail","clarify","True","True","The user agreed to start, and the response, instead of starting the plan, asked for unnecessary clarifications."
+"holdout2_ack_en_06","A simple 'yes' should be taken as agreement with the proposed next step","acknowledgment_or_correction","strict","answer, acknowledge","Treat this as agreement with the proposed next step and begin the short outline, or at least confirm that you are starting it.","Fine. What is the topic of the report?","4.563","970","155","1125","fail","clarify","False","True","User's 'Yes' was a clear consent to start the proposed step, so the reply should have begun the plan instead of asking for the topic."
+"holdout2_ack_en_07","A simple 'no' can be a refusal of detail","acknowledgment_or_correction","baseline","answer, acknowledge","Understand this as declining the details and switch to a short version or briefly confirm the shorter mode.","Fine. Briefly.","2.313","24","60","84","pass","acknowledge","False","False","I understood the refusal to go into detail and correctly switched to a short format."
+"holdout2_ack_en_07","A simple 'no' can be a refusal of detail","acknowledgment_or_correction","strict","answer, acknowledge","Understand this as declining the details and switch to a short version or briefly confirm the shorter mode.","Okay, no details.","2.35","968","59","1027","pass","acknowledge","False","False","Confirmed the refusal of details and switched to short mode."
+"holdout2_ack_en_08","The user is confirming the framing","acknowledgment_or_correction","baseline","acknowledge","Briefly acknowledge that this is the frame in focus. Do not ask what ""this"" means when the referent is obvious.","Yes - exactly that.
+
+More precise wording:
+
+> We're not testing the model's ""general intelligence,"" but rather its ability to infer user intent from incomplete, noisy, or ambiguous input.
+
+That is, the question is not:
+
+> ""How smart is the model in general""?
+
+But rather:
+
+> ""How well does the model understand what the user actually wants""?
+
+It can be even shorter:
+
+> This is not a test of intelligence, but of intent inference: whether the model can reconstruct the task based on the user's words.
+
+Or more applied:
+
+> We are not testing the knowledge of the model, but its ability to correctly interpret the user request and select the expected action.","5.782","27","302","329","pass","acknowledge","False","False","It correctly confirms the referenced frame without asking for clarification."
+"holdout2_ack_en_08","The user is confirming the framing","acknowledgment_or_correction","strict","acknowledge","Briefly acknowledge that this is the frame in focus. Do not ask what ""this"" means when the referent is obvious.","I understand, the focus is on **intent inference**.","2.593","971","96","1067","pass","acknowledge","False","False","Briefly confirms the intended framing without asking for clarification."
+"holdout2_ack_en_09","A casing or format correction should simply be accepted","acknowledgment_or_correction","baseline","acknowledge, answer","Briefly accept the naming correction.","Yes, **StrictModeEval** is better: it is more readable and matches the CamelCase/PascalCase style.
+
+I would name the file like this:
+
+```text
+StrictModeEval
+```
+
+If this is a JS/TS file:
+
+```text
+StrictModeEval.js
+```
+
+or
+
+```text
+StrictModeEval.ts
+```","2.449","25","124","149","pass","answer","False","False","Accepted the correction and confirmed the preferred option without further clarification."
+"holdout2_ack_en_09","A casing or format correction should simply be accepted","acknowledgment_or_correction","strict","acknowledge, answer","Briefly accept the naming correction.","Okay, I'll name the file **StrictModeEval**.","2.206","969","53","1022","pass","acknowledge","False","False","Briefly accepted the correction of the title in the required format."
+"holdout2_ack_en_10","Agreement does not require a new explanation","acknowledgment_or_correction","baseline","acknowledge","Briefly acknowledge the agreement, without starting a new explanation.","Yes. And it's better to record the process right away:
+
+1. **Old 32 cases** - remain as a regression suite, so as not to break what has already been tested.
+2. **Holdout cases** - we do not touch them when setting up prompts/logic, we use them only for an honest final check.
+3. **New real cases** - we add them periodically, but some are immediately put into holdout.
+4. **Metrics separately**:
+   - accuracy of the answer;
+   - format stability;
+   - absence of hallucinations;
+   - correct work on borderline cases.
+
+Otherwise, it's easy to retrain on these 32 cases and get a beautiful local metric that will fall apart on the new data.","4.585","30","219","249","fail","answer","True","False","User only agreed, but the reply added new recommendations instead of briefly acknowledging."
+"holdout2_ack_en_10","Agreement does not require a new explanation","acknowledgment_or_correction","strict","acknowledge","Briefly acknowledge the agreement, without starting a new explanation.","Yes, this is the key point.","1.761","974","37","1011","pass","acknowledge","False","False","Briefly acknowledged the user's agreement without adding new explanation."
+"holdout2_clear_en_01","A clear PowerShell choice should be followed directly","clear_direct","baseline","answer","Provide a PowerShell command or option. Do not ask about the task again.","Ok, PowerShell.  
+Please write what exactly needs to be done by the command - for example:
+
+- delete/rename files
+- find text in files
+- download file
+- unpack the archive
+- run the script
+- display a list of processes/ports
+- configure environment variables
+
+And if there is a path to the file/folder, send it too.","5.849","24","237","261","fail","clarify","False","True","The user has already selected PowerShell, but the assistant asks again what needs to be done."
+"holdout2_clear_en_01","A clear PowerShell choice should be followed directly","clear_direct","strict","answer","Provide a PowerShell command or option. Do not ask about the task again.","What exact command should you give in PowerShell?","5.059","968","118","1086","fail","clarify","False","True","The user had already selected PowerShell, but instead of the command option, a new clarifying question was asked."
+"holdout2_clear_en_02","A clear request for a shorter version should be followed directly","clear_direct","baseline","answer","Immediately provide a shorter version of the explanation already given.","Strict Mode is more accurate, but more often asks for clarification.","2.474","47","75","122","pass","answer","False","False","He immediately gave a short version of the existing explanation."
+"holdout2_clear_en_02","A clear request for a shorter version should be followed directly","clear_direct","strict","answer","Immediately provide a shorter version of the explanation already given.","Strict Mode: less guesswork, more precision; clarifications - only when it is impossible without them.","2.014","991","26","1017","pass","answer","False","False","He immediately gave a short version of the already requested explanation."
+"holdout2_clear_en_03","A clear request for a table should be followed directly","clear_direct","baseline","answer","Immediately provide a table comparing the three listed options.","| Option | Briefly | Severity | Compatibility | Pros | Cons | When to choose |
+|---|---|---:|---|---|---|---|
+| **baseline** | Basic mode/ruleset | Low/medium | Maximum | Fewer false positives, easier to implement, fewer code/process changes | Misses some problems, weaker quality control | If you need a soft start, pain-free migration or support for an old project |
+| **strict v7** | Strict Legacy Mode | High | Good, especially for projects under v7 | Detects errors better than baseline; usually more stable and familiar | May require improvements, but does not use all new v8 checks | If the project is already on v7 or you need a strict but more predictable configuration |
+| **strict v8** | The most current strict regime | Maximum | Below if the project is not ready for v8 | Latest rules, maximum control, better for new projects | More breaking changes, more edits, higher risk of incompatibilities | If the project is new or ready for migration and the strictest control is needed |
+
+Briefly:
+
+| If necessary... | Choice |
+|---|---|
+| Minimal changes | **baseline** |
+| Strictly, but without sudden migration | **strict v7** |
+| Most relevant and strict | **strict v8** |","10.869","39","534","573","pass","answer","False","False","He immediately gave me a table of three options, as required."
+"holdout2_clear_en_03","A clear request for a table should be followed directly","clear_direct","strict","answer","Immediately provide a table comparing the three listed options.","| Option | Behavior | Pros | Cons | When to choose |
+|---|---|---|---|---|
+| **baseline** | More freely interprets requests, more often ""thinks out"" the intention | Helps faster in simple cases; fewer clarifications | Higher risk of misunderstanding short/incomplete messages | When speed matters and assumptions are acceptable |
+| **strict v7** | Treats vague requests more strictly, clarifies more often | Fewer erroneous actions; better for precise scenarios | Can be overly cautious | When precision and control matter |
+| **strict v8** | Strict mode with context priority: if there is an explicit pending task, it executes, if not, it clarifies | Balance accuracy and usefulness; fewer unnecessary clarifications with explicit context | Still may require clarification for fragments without context | When you need accuracy without excessive ""timidity"" |","4.802","983","236","1219","pass","answer","False","False","The reply directly provided the requested table comparison."
+"holdout2_clear_en_04","A clear request for Russian should be followed directly","clear_direct","baseline","answer","Explain the result in Russian. Do not ask for the topic again.","Of course, I will answer in Russian.","1.868","24","13","37","fail","acknowledge","False","False","The reply correctly accepts Russian, but does not actually explain the result as requested."
+"holdout2_clear_en_04","A clear request for Russian should be followed directly","clear_direct","strict","answer","Explain the result in Russian. Do not ask for the topic again.","Certainly. Send the result itself, which needs to be explained.","4.998","968","187","1155","fail","clarify","False","True","The user has already selected Russian, but instead of an explanation he asks to send the result."
+"holdout2_clear_en_05","A direct 'yes' to JSON format should be acted on","clear_direct","baseline","answer","Return the result in JSON, or begin outputting it in JSON format. Do not ask for the data again if the result is already in context.","OK. Send the source data and, if available, the desired field structure.
+
+I will return the response in valid JSON format, for example:
+
+```json
+{
+  """"result"""": {},
+  """"status"""": """"success""""
+}
+```
+
+If the scheme is not specified, I will select a convenient structure myself.","4.163","24","214","238","fail","clarify","True","True","The response went into a request for new data instead of starting the JSON format or returning a result."
+"holdout2_clear_en_05","A direct 'yes' to JSON format should be acted on","clear_direct","strict","answer","Return the result in JSON, or begin outputting it in JSON format. Do not ask for the data again if the result is already in context.","What result should be formatted in JSON?","4.375","968","183","1151","fail","clarify","False","True","The user has already agreed to JSON, but the response again asks for clarification instead of execution."
+"holdout2_clear_en_06","Choosing the first option is already clear","clear_direct","baseline","answer, acknowledge","Select the first option and continue in the careful style. Do not ask which option the user means.","Ok, let's choose the first - cautious option.
+
+We move gently: without pressure, with neutral wording and the opportunity for the person to respond calmly. If necessary, I can immediately design the text/message in this style.","4.382","34","206","240","pass","answer","False","False","Correctly selected the first option and continued with the cautious style."
+"holdout2_clear_en_06","Choosing the first option is already clear","clear_direct","strict","answer, acknowledge","Select the first option and continue in the careful style. Do not ask which option the user means.","We choose the first - cautious option.","6.315","978","138","1116","pass","answer","False","False","The reply correctly selects the first option and matches the requested cautious tone."
+"holdout2_clear_en_07","A clear request for email format should be followed directly","clear_direct","baseline","answer","Immediately write the email based on the gist already provided.","Subject: Rescheduling a meeting
+
+Hello!
+
+Please reschedule our meeting until tomorrow. Please tell me what time will be convenient for you.
+
+Thanks for understanding.
+
+Best regards,  
+[Your name]","3.275","32","106","138","pass","answer","False","False","I immediately wrote an email based on the already given essence."
+"holdout2_clear_en_07","A clear request for email format should be followed directly","clear_direct","strict","answer","Immediately write the email based on the gist already provided.","Subject: Rescheduling a meeting
+
+Hello!
+
+Please reschedule our meeting until tomorrow. Please tell me what time will be convenient for you.
+
+Thank you!","2.698","976","72","1048","pass","answer","False","False","The reply directly produced the requested email using the provided context."
+"holdout2_clear_en_08","Choosing a harsher review style should trigger the harsher review","clear_direct","baseline","answer","Provide a harsh analysis of the text already given.","Hard:
+
+The phrase ""the model again answered the wrong question"" is not a review, but an irritated outburst. It has emotion, but almost no useful information.
+
+Problems:
+
+1. **Unclear what the question was**  
+   Without the original request, it is impossible to understand whether the model really missed the mark or whether the user himself formulated the problem crookedly.
+
+2. **It is not specified what exactly is wrong**  
+   Was the answer too general? Did he go to the side? Made up facts? Didn't follow the format? Reply to the next topic? These are all different mistakes.
+
+3. **The word ""again"" is useless without a story**  
+   It shows accumulated irritation, but does not provide data: when before, in what cases, how often.
+
+4. **No criterion for the correct answer**  
+   It is unclear what response was expected. Therefore, feedback cannot be used for improvement.
+
+5. **The phrase sounds like a complaint, not a diagnosis**  
+   She says, ""I didn't like it,"" but doesn't explain what to fix.
+
+Normal hard option:
+
+> The model did not answer the question asked. Instead of explaining reason X, she gave a general answer about Y. It was necessary to specifically compare A and B, and not retell background information. The response does not match the request and does not solve the user's problem.
+
+Even tougher:
+
+> Response failed: the model ignored a key part of the request and generated irrelevant text. The user asked about a specific action/reason/comparison and received a generic answer. This result cannot be considered completion of the task.","9.54","42","461","503","pass","answer","False","False","A rigorous analysis of the original phrase is given without unnecessary clarification."
+"holdout2_clear_en_08","Choosing a harsher review style should trigger the harsher review","clear_direct","strict","answer","Provide a harsh analysis of the text already given.","Tough: the review is too general and almost useless.
+
+The phrase ""the model again answered the wrong question"" expresses irritation, but does not provide data:
+- what was the question;
+- what exactly the model answered;
+- what is the discrepancy;
+- what was expected instead;
+- whether it was isolated or systemic.
+
+Such feedback cannot normally be used to correct an error. The most that is clear from it is that the user is dissatisfied with the relevance of the answer.
+
+Better like this:
+
+> The model did not answer the question asked. I asked about X, and received Y in response. I was expecting a specific answer about Z. This is not the first time the problem has been repeated.
+
+This already provides a basis for analysis and correction.","4.809","986","223","1209","pass","answer","False","False","A rigorous analysis of the source text is given without unnecessary clarifications."
+"holdout2_clear_en_09","A direct request for brevity should lead to a brief answer","clear_direct","baseline","answer, acknowledge","Answer briefly or clearly switch to a brief mode. Do not ask for the topic again.","Ok, briefly. What do you need?","2.718","22","82","104","fail","clarify","False","True","The user already asked for a short response, but the reply asks what they need instead of answering briefly."
+"holdout2_clear_en_09","A direct request for brevity should lead to a brief answer","clear_direct","strict","answer, acknowledge","Answer briefly or clearly switch to a brief mode. Do not ask for the topic again.","Okay, briefly.","3.781","966","140","1106","pass","acknowledge","False","False","Briefly confirms the user's request for a short response."
+"holdout2_clear_en_10","A clear request for JSON should be followed directly","clear_direct","baseline","answer","Immediately provide JSON using the result already given in context.","{
+  """"baseline"""": 25,
+  """"strict"""": 67.5,
+  """"unit"""": """"percent""""
+}","2.171","32","65","97","pass","answer","False","False","The reply directly provided the requested JSON."
+"holdout2_clear_en_10","A clear request for JSON should be followed directly","clear_direct","strict","answer","Immediately provide JSON using the result already given in context.","```json
+{
+  """"baseline"""": """"25%"""",
+  """"strict"""": """"67.5%""""
+}
+```","2.096","976","59","1035","pass","answer","False","False","Immediately gave JSON with the desired result."

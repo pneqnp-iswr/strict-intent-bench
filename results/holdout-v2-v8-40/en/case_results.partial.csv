@@ -1,0 +1,16 @@
+id,title,category,mode,acceptable_actions,success_criteria,response,latency_seconds,input_tokens,output_tokens,total_tokens,grade_verdict,grade_primary_action,grade_wrong_intent_inference,grade_unnecessary_clarification,grade_notes
+holdout2_quoted_en_01,"A quoted tone phrase may be a reaction, not a rewrite request",quoted_reply,baseline,"clarify, acknowledge","Recognize the quote as a point of focus or a reaction. Briefly acknowledge it, or ask whether the wording needs explanation or replacement. Do not automatically rewrite the whole text.","“Sounds calmer” means **it gives a calmer impression** or **it feels less harsh/aggressive**.
+
+In your sentence:
+
+> “That sounds calmer.”
+
+= **That wording is more gentle/less confrontational.**
+
+You could also say:
+
+- “That sounds more polite.”
+- “That feels softer.”
+- “That comes across as less harsh.”
+- “That tone is calmer.”",4.199,41,126,167,fail,answer,False,False,It explains the quoted phrase instead of briefly acknowledging or asking a short clarification.
+holdout2_quoted_en_01,"A quoted tone phrase may be a reaction, not a rewrite request",quoted_reply,strict,"clarify, acknowledge","Recognize the quote as a point of focus or a reaction. Briefly acknowledge it, or ask whether the wording needs explanation or replacement. Do not automatically rewrite the whole text.",Do you want a different wording for “sounds calmer”?,3.336,971,106,1077,pass,clarify,False,False,"Briefly asks whether the quoted phrase needs different wording, which fits the case."

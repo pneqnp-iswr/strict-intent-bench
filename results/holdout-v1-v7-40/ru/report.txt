@@ -1,0 +1,48 @@
+﻿Strict Mode Eval Report
+
+[baseline]
+cases: 40
+pass_rate: 25.0
+wrong_intent_inference_rate: 50.0
+unnecessary_clarification_rate: 12.5
+clarification_rate: 22.5
+avg_latency_seconds: 4.889
+avg_input_tokens: 32.125
+avg_output_tokens: 190.45
+avg_total_tokens: 222.575
+
+[strict]
+cases: 40
+pass_rate: 67.5
+wrong_intent_inference_rate: 12.5
+unnecessary_clarification_rate: 20.0
+clarification_rate: 60.0
+avg_latency_seconds: 3.598
+avg_input_tokens: 859.125
+avg_output_tokens: 113.8
+avg_total_tokens: 972.925
+
+Strict performed better on these cases:
+- holdout_ack_en_01: Brief agreement is not a new request
+- holdout_ack_en_04: A simple 'exactly' is just confirmation
+- holdout_ack_en_05: A corrected term should simply be accepted
+- holdout_ack_en_10: The user is confirming the framing
+- holdout_clear_en_07: A clear request for email format should be followed directly
+- holdout_quoted_en_01: A quoted tone word may be a point of focus, not a rewrite request
+- holdout_quoted_en_02: A risk-related quote should not trigger execution
+- holdout_quoted_en_03: A strongly worded quote may just be a reaction
+- holdout_quoted_en_05: A quoted classification may signal disagreement
+- holdout_quoted_en_06: A quoted short phrase with ambiguous punctuation needs clarification
+- holdout_quoted_en_07: A quoted evaluation term should not trigger a long analysis
+- holdout_quoted_en_08: A quoted title may simply be confirmation
+- holdout_quoted_en_09: A quoted price-related phrase may just be a point of focus
+- holdout_quoted_en_10: A quoted command should not trigger execution guidance
+- holdout_short_en_02: A single metric without a task needs clarification
+- holdout_short_en_04: A day-of-week fragment is ambiguous
+- holdout_short_en_08: A comparative fragment is incomplete
+- holdout_short_en_09: A brief 'that's not right' does not specify the correction
+- holdout_short_en_10: A topic alone is not a request for a lecture
+
+Strict performed worse on these cases:
+- holdout_ack_en_06: 'That's not it' is a correction, not a new ambiguity
+- holdout_clear_en_09: A clear request for JSON should be followed directly

@@ -1,0 +1,43 @@
+Strict Mode Eval Report
+
+[baseline]
+cases: 40
+pass_rate: 25.0
+wrong_intent_inference_rate: 45.0
+unnecessary_clarification_rate: 20.0
+clarification_rate: 22.5
+avg_latency_seconds: 4.062
+avg_input_tokens: 29.85
+avg_output_tokens: 148.95
+avg_total_tokens: 178.8
+
+[strict]
+cases: 40
+pass_rate: 55.0
+wrong_intent_inference_rate: 20.0
+unnecessary_clarification_rate: 15.0
+clarification_rate: 35.0
+avg_latency_seconds: 3.209
+avg_input_tokens: 959.85
+avg_output_tokens: 94.725
+avg_total_tokens: 1054.575
+
+Strict improved on these cases:
+- holdout_ack_en_04: A simple 'exactly' is just confirmation
+- holdout_ack_en_05: A corrected term should simply be accepted
+- holdout_ack_en_10: The user is confirming the framing
+- holdout_clear_en_02: A clear request for a shorter version should be followed directly
+- holdout_quoted_en_01: A quoted tone word may be a point of focus, not a rewrite request
+- holdout_quoted_en_02: A risk-related quote should not trigger execution
+- holdout_quoted_en_03: A strongly worded quote may just be a reaction
+- holdout_quoted_en_07: A quoted evaluation term should not trigger a long analysis
+- holdout_quoted_en_08: A quoted title may simply be confirmation
+- holdout_quoted_en_09: A quoted price-related phrase may just be a point of focus
+- holdout_quoted_en_10: A quoted command should not trigger execution guidance
+- holdout_short_en_04: A day-of-week fragment is ambiguous
+- holdout_short_en_06: The demonstrative 'this' needs a referent
+- holdout_short_en_09: A brief 'that's not right' does not specify the correction
+
+Strict regressed on these cases:
+- holdout_ack_en_01: Brief agreement is not a new request
+- holdout_ack_en_06: 'That's not it' is a correction, not a new ambiguity

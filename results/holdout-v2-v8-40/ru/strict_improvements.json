@@ -1,0 +1,70 @@
+﻿[
+    {
+        "id": "holdout2_ack_en_01",
+        "title": "Brief agreement is not a new request"
+    },
+    {
+        "id": "holdout2_ack_en_04",
+        "title": "A simple \u0027got it\u0027 should close the micro-topic"
+    },
+    {
+        "id": "holdout2_ack_en_10",
+        "title": "Agreement does not require a new explanation"
+    },
+    {
+        "id": "holdout2_clear_en_09",
+        "title": "A direct request for brevity should lead to a brief answer"
+    },
+    {
+        "id": "holdout2_quoted_en_01",
+        "title": "A quoted tone phrase may be a reaction, not a rewrite request"
+    },
+    {
+        "id": "holdout2_quoted_en_02",
+        "title": "A quoted command should not trigger execution guidance"
+    },
+    {
+        "id": "holdout2_quoted_en_03",
+        "title": "A quoted title may simply be confirmation"
+    },
+    {
+        "id": "holdout2_quoted_en_04",
+        "title": "A quoted evaluative phrase should not turn into a lecture"
+    },
+    {
+        "id": "holdout2_quoted_en_05",
+        "title": "A quoted legal classification may signal disagreement"
+    },
+    {
+        "id": "holdout2_quoted_en_07",
+        "title": "Quoting \u0027not this\u0027 is still ambiguous"
+    },
+    {
+        "id": "holdout2_quoted_en_08",
+        "title": "A quoted format label should not automatically produce the document"
+    },
+    {
+        "id": "holdout2_quoted_en_09",
+        "title": "A quoted style phrase may just indicate the target tone"
+    },
+    {
+        "id": "holdout2_quoted_en_10",
+        "title": "A quoted risk phrase should not trigger operational guidance"
+    },
+    {
+        "id": "holdout2_short_en_04",
+        "title": "A comparative fragment is incomplete"
+    },
+    {
+        "id": "holdout2_short_en_05",
+        "title": "An error term without context is ambiguous"
+    },
+    {
+        "id": "holdout2_short_en_06",
+        "title": "A demonstrative without a referent is ambiguous"
+    },
+    {
+        "id": "holdout2_short_en_10",
+        "title": "A topic alone is not a request for a lecture"
+    }
+]
