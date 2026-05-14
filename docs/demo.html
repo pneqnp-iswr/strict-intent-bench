@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>strict-intent-bench demo</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121936;
+      --panel-2: #0f1730;
+      --text: #e8ecf8;
+      --muted: #a8b2d1;
+      --border: #273252;
+      --chip: #1c294f;
+      --accent: #8fb3ff;
+      --danger: #ffb4a8;
+      --warn: #ffe1a6;
+      --ok: #a9e8bc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1b2a56 0, #0b1020 38%, #090d19 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 20px 24px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 6vw, 56px);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+    }
+    .subtitle {
+      max-width: 820px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px 56px;
+    }
+    .summary-panel, .metric-panel, .toolbar, .examples-panel {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(18, 25, 54, 0.86);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
+    }
+    .summary-panel {
+      padding: 18px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .summary-card {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(15, 23, 48, 0.8);
+    }
+    .summary-card h2 {
+      font-size: 14px;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+    .summary-card p { margin: 0; color: #d5dcf1; line-height: 1.5; }
+    .metric-panel {
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .metric-panel h2, .examples-panel h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    .metric-note, .example-note {
+      color: var(--muted);
+      margin: 0 0 16px;
+      line-height: 1.5;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(15, 23, 48, 0.74);
+    }
+    .metric-card h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 54px;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #0b1229;
+      border: 1px solid var(--border);
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #8fb3ff, #a9e8bc);
+    }
+    .bar-fill.bad { background: linear-gradient(90deg, #ffb4a8, #ffe1a6); }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 18px 0 14px;
+      flex-wrap: wrap;
+    }
+    .tab-button {
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 48, 0.82);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font: inherit;
+    }
+    .tab-button.active {
+      color: var(--text);
+      border-color: #416ad0;
+      background: var(--chip);
+    }
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      padding: 16px;
+      position: sticky;
+      top: 12px;
+      z-index: 5;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    select, input {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #0b1229;
+      color: var(--text);
+      outline: none;
+    }
+    select:focus, input:focus { border-color: var(--accent); }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(15, 23, 48, 0.75);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .case, .example-card {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(18, 25, 54, 0.95), rgba(12, 18, 38, 0.95));
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+      padding: 18px;
+    }
+    .case h2, .example-card h3 {
+      margin: 8px 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 0 0 14px;
+    }
+    .tag {
+      font-size: 12px;
+      color: #dbe5ff;
+      background: var(--chip);
+      border: 1px solid #2f3e69;
+      border-radius: 999px;
+      padding: 5px 8px;
+      white-space: nowrap;
+    }
+    .tag.action { border-color: #416ad0; }
+    .tag.pass { color: #dbffe4; border-color: #3b7c4b; background: rgba(44, 96, 58, 0.55); }
+    .tag.fail { color: #ffe2dd; border-color: #8f4d45; background: rgba(100, 38, 35, 0.55); }
+    .tag.warn { color: #fff0cf; border-color: #8a6a2f; background: rgba(104, 74, 25, 0.55); }
+    .messages {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .message, .response-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      background: var(--panel-2);
+    }
+    .role {
+      font-size: 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .content {
+      white-space: pre-wrap;
+      line-height: 1.45;
+      color: var(--text);
+    }
+    .section-title {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 16px 0 6px;
+    }
+    .text-block {
+      color: #d5dcf1;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .examples-panel {
+      padding: 18px;
+    }
+    .example-grid {
+      display: grid;
+      gap: 16px;
+    }
+    .response-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .response-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .response-head strong { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .empty, .error {
+      padding: 28px;
+      border: 1px dashed var(--border);
+      border-radius: 24px;
+      color: var(--muted);
+      background: rgba(15, 23, 48, 0.65);
+    }
+    .error { color: var(--danger); }
+    footer {
+      color: var(--muted);
+      margin-top: 28px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    code { color: var(--ok); }
+    .hidden { display: none; }
+    @media (max-width: 900px) {
+      .toolbar, .summary-panel, .metric-grid, .response-grid { grid-template-columns: 1fr; }
+      .toolbar { position: static; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>strict-intent-bench</h1>
+    <p class="subtitle">
+      A static inspection demo for wrong intent inference cases. Inspect benchmark cases, expected actions, success criteria, and side-by-side illustrative failures without using an API or backend.
+    </p>
+  </header>
+
+  <main>
+    <section class="summary-panel" aria-label="Project summary">
+      <div class="summary-card">
+        <h2>Failure mode</h2>
+        <p>Wrong intent inference is when an assistant answers a plausible implied request, but not the request the user actually made.</p>
+      </div>
+      <div class="summary-card">
+        <h2>Intervention</h2>
+        <p>Strict / Precision behavior aims to reduce wrong-intent behavior by avoiding unsupported assumptions about short, quoted, corrective, or context-dependent replies.</p>
+      </div>
+      <div class="summary-card">
+        <h2>Current weakness</h2>
+        <p>The trade-off is over-clarification: strict behavior can ask too many questions when the user's selection is already clear.</p>
+      </div>
+    </section>
+
+    <section class="metric-panel" aria-label="Measured summary bars">
+      <h2>Existing measured summary</h2>
+      <p class="metric-note">Bars use existing v0.2 80-case run summaries in this repository. Lower is better for wrong intent inference and unnecessary clarification.</p>
+      <div class="metric-grid" id="metricGrid"></div>
+    </section>
+
+    <nav class="tabs" aria-label="Demo tabs">
+      <button class="tab-button active" data-tab="examples">Side-by-side examples</button>
+      <button class="tab-button" data-tab="cases">Benchmark cases</button>
+    </nav>
+
+    <section id="examplesView" class="examples-panel">
+      <h2>Side-by-side examples</h2>
+      <p class="example-note">These are illustrative manually written examples, not measured API outputs. They show the intended failure pattern before running a full evaluation.</p>
+      <div class="example-grid" id="exampleGrid"></div>
+    </section>
+
+    <section id="casesView" class="hidden">
+      <section class="toolbar" aria-label="Filters">
+        <div>
+          <label for="categoryFilter">Category</label>
+          <select id="categoryFilter"><option value="">All categories</option></select>
+        </div>
+        <div>
+          <label for="actionFilter">Expected action</label>
+          <select id="actionFilter"><option value="">All actions</option></select>
+        </div>
+        <div>
+          <label for="ambiguityFilter">Ambiguity</label>
+          <select id="ambiguityFilter"><option value="">All levels</option></select>
+        </div>
+        <div>
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="case id, title, text..." />
+        </div>
+      </section>
+
+      <section class="stats" id="stats"></section>
+      <section class="grid" id="caseGrid"></section>
+    </section>
+
+    <footer>
+      Data sources: <code>docs/demo_cases.json</code> and <code>docs/examples.json</code>. Regenerate benchmark cases with <code>make demo-data</code> or <code>python tools/export_demo_cases.py</code>.
+    </footer>
+  </main>
+
+  <script>
+    const measuredSummary = {
+      "EN v0.2": {
+        baseline: { pass_rate: 28.7, wrong_intent_inference_rate: 57.5, unnecessary_clarification_rate: 18.8 },
+        strict: { pass_rate: 61.3, wrong_intent_inference_rate: 25.0, unnecessary_clarification_rate: 23.8 }
+      },
+      "RU v0.2": {
+        baseline: { pass_rate: 27.5, wrong_intent_inference_rate: 53.8, unnecessary_clarification_rate: 22.5 },
+        strict: { pass_rate: 60.0, wrong_intent_inference_rate: 17.5, unnecessary_clarification_rate: 23.8 }
+      }
+    };
+
+    const state = {
+      cases: [],
+      examples: [],
+      filters: { category: "", action: "", ambiguity: "", search: "" }
+    };
+
+    const els = {
+      metricGrid: document.getElementById("metricGrid"),
+      exampleGrid: document.getElementById("exampleGrid"),
+      examplesView: document.getElementById("examplesView"),
+      casesView: document.getElementById("casesView"),
+      category: document.getElementById("categoryFilter"),
+      action: document.getElementById("actionFilter"),
+      ambiguity: document.getElementById("ambiguityFilter"),
+      search: document.getElementById("searchInput"),
+      stats: document.getElementById("stats"),
+      grid: document.getElementById("caseGrid")
+    };
+
+    function text(value) {
+      if (value === null || value === undefined || value === "") return "—";
+      return String(value);
+    }
+
+    function escapeHtml(value) {
+      return text(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function verdictClass(verdict) {
+      if (verdict === "pass") return "pass";
+      if (verdict === "unnecessary_clarification") return "warn";
+      return "fail";
+    }
+
+    function renderMetricBars() {
+      const metrics = [
+        ["Pass rate", "pass_rate", false],
+        ["Wrong intent inference", "wrong_intent_inference_rate", true],
+        ["Unnecessary clarification", "unnecessary_clarification_rate", true]
+      ];
+      els.metricGrid.innerHTML = metrics.map(([label, key, lowerIsBetter]) => {
+        const rows = Object.entries(measuredSummary).map(([split, values]) => {
+          const baseline = values.baseline[key];
+          const strict = values.strict[key];
+          return `
+            <div class="section-title">${escapeHtml(split)}</div>
+            <div class="bar-row"><span>Baseline</span><div class="bar-track"><div class="bar-fill ${lowerIsBetter ? 'bad' : ''}" style="width:${baseline}%"></div></div><span>${baseline}%</span></div>
+            <div class="bar-row"><span>Strict</span><div class="bar-track"><div class="bar-fill" style="width:${strict}%"></div></div><span>${strict}%</span></div>
+          `;
+        }).join("");
+        return `<article class="metric-card"><h3>${escapeHtml(label)}</h3>${rows}</article>`;
+      }).join("");
+    }
+
+    function uniqueValues(key) {
+      return [...new Set(state.cases.map(item => item[key]).filter(Boolean))].sort();
+    }
+
+    function fillSelect(selectEl, values) {
+      for (const value of values) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        selectEl.appendChild(option);
+      }
+    }
+
+    function caseMatches(caseItem) {
+      if (state.filters.category && caseItem.category !== state.filters.category) return false;
+      if (state.filters.action && caseItem.expected_action !== state.filters.action) return false;
+      if (state.filters.ambiguity && caseItem.ambiguity_level !== state.filters.ambiguity) return false;
+
+      const q = state.filters.search.trim().toLowerCase();
+      if (!q) return true;
+
+      const haystack = JSON.stringify(caseItem).toLowerCase();
+      return haystack.includes(q);
+    }
+
+    function renderStats(filtered) {
+      const categories = new Set(filtered.map(item => item.category)).size;
+      const actions = new Set(filtered.map(item => item.expected_action)).size;
+      els.stats.innerHTML = `
+        <span class="pill">Showing <strong>${filtered.length}</strong> / ${state.cases.length} cases</span>
+        <span class="pill">Categories: <strong>${categories}</strong></span>
+        <span class="pill">Expected actions: <strong>${actions}</strong></span>
+      `;
+    }
+
+    function renderMessages(messages) {
+      return (messages || []).map(message => `
+        <div class="message">
+          <div class="role">${escapeHtml(message.role)}</div>
+          <div class="content">${escapeHtml(message.content)}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderCase(caseItem) {
+      const article = document.createElement("article");
+      article.className = "case";
+      article.innerHTML = `
+        <div class="meta">
+          <span class="tag">${escapeHtml(caseItem.category)}</span>
+          <span class="tag action">${escapeHtml(caseItem.expected_action)}</span>
+          <span class="tag">ambiguity: ${escapeHtml(caseItem.ambiguity_level)}</span>
+          <span class="tag">pending: ${escapeHtml(caseItem.pending_context_strength)}</span>
+        </div>
+        <h2>${escapeHtml(caseItem.id)} — ${escapeHtml(caseItem.title)}</h2>
+        <div class="messages">${renderMessages(caseItem.messages)}</div>
+        <div class="section-title">Acceptable actions</div>
+        <div class="actions">${(caseItem.acceptable_actions || []).map(action => `<span class="tag">${escapeHtml(action)}</span>`).join("") || "—"}</div>
+        <div class="section-title">Success criteria</div>
+        <p class="text-block">${escapeHtml(caseItem.success_criteria)}</p>
+        <div class="section-title">Notes</div>
+        <p class="text-block">${escapeHtml(caseItem.notes)}</p>
+      `;
+      return article;
+    }
+
+    function renderExample(example) {
+      const article = document.createElement("article");
+      article.className = "example-card";
+      article.innerHTML = `
+        <div class="meta">
+          <span class="tag">${escapeHtml(example.category)}</span>
+          <span class="tag action">expected: ${escapeHtml(example.expected_action)}</span>
+          <span class="tag">illustrative, not measured</span>
+        </div>
+        <h3>${escapeHtml(example.case_id)}</h3>
+        <div class="messages">${renderMessages(example.messages)}</div>
+        <div class="response-grid">
+          <div class="response-box">
+            <div class="response-head"><strong>Baseline response</strong><span class="tag ${verdictClass(example.baseline_verdict)}">${escapeHtml(example.baseline_verdict)}</span></div>
+            <div class="content">${escapeHtml(example.baseline_response)}</div>
+          </div>
+          <div class="response-box">
+            <div class="response-head"><strong>Strict response</strong><span class="tag ${verdictClass(example.strict_verdict)}">${escapeHtml(example.strict_verdict)}</span></div>
+            <div class="content">${escapeHtml(example.strict_response)}</div>
+          </div>
+        </div>
+        <div class="section-title">Explanation</div>
+        <p class="text-block">${escapeHtml(example.explanation)}</p>
+      `;
+      return article;
+    }
+
+    function renderExamples() {
+      els.exampleGrid.innerHTML = "";
+      if (!state.examples.length) {
+        els.exampleGrid.innerHTML = '<div class="empty">No side-by-side examples loaded.</div>';
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      state.examples.forEach(example => fragment.appendChild(renderExample(example)));
+      els.exampleGrid.appendChild(fragment);
+    }
+
+    function renderCases() {
+      const filtered = state.cases.filter(caseMatches);
+      renderStats(filtered);
+      els.grid.innerHTML = "";
+
+      if (!filtered.length) {
+        els.grid.innerHTML = '<div class="empty">No cases match the current filters.</div>';
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      filtered.forEach(caseItem => fragment.appendChild(renderCase(caseItem)));
+      els.grid.appendChild(fragment);
+    }
+
+    function setTab(tab) {
+      document.querySelectorAll(".tab-button").forEach(button => {
+        button.classList.toggle("active", button.dataset.tab === tab);
+      });
+      els.examplesView.classList.toggle("hidden", tab !== "examples");
+      els.casesView.classList.toggle("hidden", tab !== "cases");
+    }
+
+    function bindEvents() {
+      document.querySelectorAll(".tab-button").forEach(button => {
+        button.addEventListener("click", () => setTab(button.dataset.tab));
+      });
+      els.category.addEventListener("change", event => { state.filters.category = event.target.value; renderCases(); });
+      els.action.addEventListener("change", event => { state.filters.action = event.target.value; renderCases(); });
+      els.ambiguity.addEventListener("change", event => { state.filters.ambiguity = event.target.value; renderCases(); });
+      els.search.addEventListener("input", event => { state.filters.search = event.target.value; renderCases(); });
+    }
+
+    async function loadJson(path) {
+      const response = await fetch(path, { cache: "no-store" });
+      if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+      return response.json();
+    }
+
+    async function init() {
+      bindEvents();
+      renderMetricBars();
+      try {
+        const [cases, examples] = await Promise.all([
+          loadJson("demo_cases.json"),
+          loadJson("examples.json")
+        ]);
+        state.cases = cases;
+        state.examples = examples;
+        fillSelect(els.category, uniqueValues("category"));
+        fillSelect(els.action, uniqueValues("expected_action"));
+        fillSelect(els.ambiguity, uniqueValues("ambiguity_level"));
+        renderExamples();
+        renderCases();
+      } catch (error) {
+        els.exampleGrid.innerHTML = `<div class="error">Could not load demo JSON files. Serve the repo with a local static server such as <code>python -m http.server</code>. Details: ${escapeHtml(error.message)}</div>`;
+        els.grid.innerHTML = `<div class="error">Could not load demo JSON files. Details: ${escapeHtml(error.message)}</div>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

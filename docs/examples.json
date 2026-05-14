@@ -1,0 +1,170 @@
+[
+  {
+    "case_id": "ex_quoted_01",
+    "category": "quoted_reply",
+    "messages": [
+      {"role": "assistant", "content": "I can make the complaint sound less aggressive and more neutral."},
+      {"role": "user", "content": "\"less aggressive\""}
+    ],
+    "expected_action": "ask_clarification",
+    "baseline_response": "Here is a less aggressive version: I understand the situation was frustrating, and I would appreciate your help resolving it.",
+    "strict_response": "Do you want me to rewrite the complaint to be less aggressive, or are you pointing to that phrase?",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The user only quoted a phrase from the prior answer. Rewriting is plausible, but the requested operation is not explicit."
+  },
+  {
+    "case_id": "ex_quoted_02",
+    "category": "quoted_reply",
+    "messages": [
+      {"role": "assistant", "content": "Do not run `rm -rf ./cache` unless you are sure the path is disposable."},
+      {"role": "user", "content": "`rm -rf ./cache`"}
+    ],
+    "expected_action": "avoid_unasked_execution",
+    "baseline_response": "Run this command from your project directory: `rm -rf ./cache`.",
+    "strict_response": "You quoted the command. I would not treat that as a request to run or recommend it. Are you asking what it does or whether it is safe?",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "A quoted risky command should not trigger operational instructions unless the user clearly asks for them."
+  },
+  {
+    "case_id": "ex_quoted_03",
+    "category": "quoted_reply",
+    "messages": [
+      {"role": "assistant", "content": "The phrase 'cheap but reliable' may sound too informal for a supplier page."},
+      {"role": "user", "content": "'cheap but reliable'"}
+    ],
+    "expected_action": "ask_clarification",
+    "baseline_response": "A better version would be: affordable and dependable.",
+    "strict_response": "Do you want alternatives for that phrase, or are you just highlighting it?",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The baseline assumes the user wants alternatives. The strict response preserves the ambiguity."
+  },
+  {
+    "case_id": "ex_short_01",
+    "category": "short_fragment",
+    "messages": [
+      {"role": "assistant", "content": "Which part should I explain next: TLS, SSL, certificates, or HTTPS?"},
+      {"role": "user", "content": "SSL"}
+    ],
+    "expected_action": "continue_pending_task",
+    "baseline_response": "SSL stands for Secure Sockets Layer. It is an older protocol for encrypted web communication.",
+    "strict_response": "SSL is the older encryption protocol that came before TLS. In casual speech people still say SSL certificates, but modern systems usually use TLS underneath.",
+    "baseline_verdict": "pass",
+    "strict_verdict": "pass",
+    "explanation": "Here the short fragment is a clear selection from a pending list, so the assistant should answer directly."
+  },
+  {
+    "case_id": "ex_short_02",
+    "category": "short_fragment",
+    "messages": [
+      {"role": "assistant", "content": "I can help with the deployment issue. Send me the exact error or the area that failed."},
+      {"role": "user", "content": "SSL"}
+    ],
+    "expected_action": "ask_clarification",
+    "baseline_response": "SSL is a security protocol used to encrypt communication between a browser and a server.",
+    "strict_response": "What do you want me to do with SSL here: explain it, debug an SSL error, or help configure certificates?",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The same short fragment can be clear or unclear depending on context. In this context the operation is underdetermined."
+  },
+  {
+    "case_id": "ex_short_03",
+    "category": "short_fragment",
+    "messages": [
+      {"role": "assistant", "content": "Choose the output format: JSON, CSV, or Markdown."},
+      {"role": "user", "content": "JSON"}
+    ],
+    "expected_action": "continue_pending_task",
+    "baseline_response": "Do you mean you want the answer in JSON format?",
+    "strict_response": "{\n  \"format\": \"JSON\",\n  \"status\": \"selected\"\n}",
+    "baseline_verdict": "unnecessary_clarification",
+    "strict_verdict": "pass",
+    "explanation": "Over-clarification is a failure when the user clearly selects from a pending task."
+  },
+  {
+    "case_id": "ex_correction_01",
+    "category": "acknowledgment_or_correction",
+    "messages": [
+      {"role": "assistant", "content": "The deadline is May 13, 2024."},
+      {"role": "user", "content": "not 2024, 2025"}
+    ],
+    "expected_action": "acknowledge_correction",
+    "baseline_response": "In 2025, May 13 falls on a Tuesday. Here is a revised schedule for that date...",
+    "strict_response": "Got it — the correct year is 2025, not 2024.",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The user corrected a fact. The assistant should acknowledge the correction, not start a new scheduling task."
+  },
+  {
+    "case_id": "ex_correction_02",
+    "category": "acknowledgment_or_correction",
+    "messages": [
+      {"role": "assistant", "content": "I will use the blue version for the banner."},
+      {"role": "user", "content": "not this"}
+    ],
+    "expected_action": "acknowledge_correction",
+    "baseline_response": "Here are three other banner concepts you can use instead...",
+    "strict_response": "Understood — not this version. Which part should change: color, layout, text, or image?",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The correction is clear, but the next operation is not. A short targeted clarification is better than inventing alternatives."
+  },
+  {
+    "case_id": "ex_correction_03",
+    "category": "acknowledgment_or_correction",
+    "messages": [
+      {"role": "assistant", "content": "So the product is for retail buyers."},
+      {"role": "user", "content": "wholesale, not retail"}
+    ],
+    "expected_action": "acknowledge_correction",
+    "baseline_response": "Wholesale means selling goods in large quantities to retailers, usually at lower prices.",
+    "strict_response": "Corrected: the product is for wholesale buyers, not retail buyers.",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The user is correcting the assistant's wording, not asking for a definition of wholesale."
+  },
+  {
+    "case_id": "ex_direct_01",
+    "category": "clear_direct",
+    "messages": [
+      {"role": "assistant", "content": "I can give you the short version or the detailed version."},
+      {"role": "user", "content": "short version"}
+    ],
+    "expected_action": "continue_pending_task",
+    "baseline_response": "Do you want the short version of the whole answer or just the conclusion?",
+    "strict_response": "The short version: the idea is promising, but the current evidence is still small. Build a cleaner benchmark and demo before making stronger claims.",
+    "baseline_verdict": "unnecessary_clarification",
+    "strict_verdict": "pass",
+    "explanation": "The user's selection is clear. Asking again slows the task down."
+  },
+  {
+    "case_id": "ex_direct_02",
+    "category": "clear_direct",
+    "messages": [
+      {"role": "assistant", "content": "Pick one: PowerShell command, Bash command, or manual steps."},
+      {"role": "user", "content": "PowerShell"}
+    ],
+    "expected_action": "continue_pending_task",
+    "baseline_response": "PowerShell is a command-line shell and scripting language for Windows.",
+    "strict_response": "Run this in PowerShell:\n\n```powershell\npython tools/export_demo_cases.py\npython -m http.server 8000\n```",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The user selected an offered output type. Defining PowerShell answers the wrong intent."
+  },
+  {
+    "case_id": "ex_direct_03",
+    "category": "clear_direct",
+    "messages": [
+      {"role": "assistant", "content": "I can translate it into Kazakh, Russian, or English."},
+      {"role": "user", "content": "Kazakh"}
+    ],
+    "expected_action": "continue_pending_task",
+    "baseline_response": "Kazakh is a Turkic language spoken mainly in Kazakhstan.",
+    "strict_response": "Here is the Kazakh version: [translated text would go here].",
+    "baseline_verdict": "wrong_intent_inference",
+    "strict_verdict": "pass",
+    "explanation": "The user selected a language from a pending task. The assistant should translate, not explain the language."
+  }
+]
