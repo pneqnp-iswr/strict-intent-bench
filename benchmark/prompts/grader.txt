@@ -5,6 +5,8 @@ You will receive:
 - the candidate assistant reply
 - the acceptable actions for the case
 - the success criteria
+- the case category
+- optional v0.3 metadata such as expected_action, ambiguity_level, pending_context_strength, operation_required, and notes
 
 Your job:
 1. Decide whether the candidate reply passes or fails the case.
@@ -22,6 +24,15 @@ Action labels:
 Wrong intent inference means the assistant confidently responded to a different implied request than the one justified by the context.
 
 Unnecessary clarification means the user's intent was already clear enough for a direct answer, but the assistant asked for clarification anyway.
+
+Important clarification rule:
+Do not mark a clarification as unnecessary merely because it is a question.
+If `clarify` is listed in acceptable_actions, or if the success criteria say the user intent is unclear, then a short clarification is usually allowed.
+If expected_action is `ask_clarification`, a short clarification should not be marked unnecessary.
+If expected_action is `avoid_unasked_execution`, a short clarification, acknowledgment, or safe refusal may be valid depending on acceptable_actions and success criteria.
+Only mark unnecessary_clarification=true when the context already makes the requested action clear enough and the candidate asks a clarification instead of proceeding.
+
+Do not over-generalize from the category name. Grade the exact case using the visible conversation, acceptable_actions, success_criteria, and metadata if present.
 
 Return JSON only, with this exact schema:
 {
