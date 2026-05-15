@@ -4,12 +4,23 @@
 
 Wrong intent inference is a failure mode where the assistant answers a plausible but unstated question. The response may be fluent and locally reasonable, but it is grounded in the wrong interpretation of the user's intent.
 
+**Live demo:** https://pneqnp-iswr.github.io/strict-intent-bench/
+
+![Demo overview](docs/demo-overview.png)
+
 This repository presents:
 
 - a public benchmark for that failure class;
 - a reproducible evaluation runner;
+- a static inspection demo with side-by-side examples;
 - published English and Russian result tracks;
 - **Strict / Precision v8** as one tested intervention, not the whole project.
+
+## Current result
+
+Initial RU/EN runs suggest that Strict / Precision behavior can reduce wrong-intent errors, but also reveals a clarification trade-off: fewer wrong assumptions, but more unnecessary clarifying questions.
+
+![Measured summary](docs/measured-summary.png)
 
 ## Repository structure
 
