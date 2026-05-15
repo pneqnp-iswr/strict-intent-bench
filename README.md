@@ -30,9 +30,22 @@ Core project docs:
 - [Dataset card](docs/dataset_card.md)
 - [Error taxonomy](docs/error_taxonomy.md)
 - [Annotation guidelines](docs/annotation_guidelines.md)
+- [Case quality checklist](docs/case_quality_checklist.md)
 - [Manual audit protocol](benchmark/manual/audit_protocol_v0.6.md)
 - [No-API reproduction guide](benchmark/manual/no_api_reproduction.md)
 - [Roadmap](ROADMAP.md)
+- [Contributing](CONTRIBUTING.md)
+- [v0.6 release notes](docs/release_notes_v0.6.md)
+
+## Tooling
+
+No-API development and inspection tools:
+
+- `tools/validate_dataset.py` checks JSONL validity and v0.3 schema fields.
+- `tools/audit_dataset_quality.py` flags weak metadata, duplicate cases, broad acceptable actions, and suspicious action/context combinations.
+- `tools/compare_dataset_splits.py` compares structural balance across two JSONL splits.
+- `tools/export_demo_cases.py` rebuilds the static demo data.
+- `tools/make_manual_eval_sheet.py`, `tools/score_manual_eval.py`, and `tools/heuristic_grade_manual_eval.py` support manual/no-API evaluation workflows.
 
 ## Repository structure
 
@@ -53,7 +66,9 @@ strict-intent-bench/
 │  └─ annotation_guidelines.md
 ├─ reports/
 ├─ results/
+├─ tools/
 ├─ ROADMAP.md
+├─ CONTRIBUTING.md
 ├─ README.md
 ├─ report.md
 ├─ requirements.txt
@@ -207,6 +222,28 @@ The benchmark can be inspected without API access:
 - follow the [no-API reproduction guide](benchmark/manual/no_api_reproduction.md).
 
 No-API inspection does not replace measured model evaluation, but it makes the artifact reviewable without private runs.
+
+## Dataset quality tooling
+
+Run structural validation:
+
+```bash
+python tools/validate_dataset.py benchmark/data/v0.3/dev_en_v3.jsonl --require-v03
+python tools/validate_dataset.py benchmark/data/v0.3/dev_ru_v3.jsonl --require-v03
+```
+
+Run dataset quality audit:
+
+```bash
+python tools/audit_dataset_quality.py benchmark/data/v0.3/dev_en_v3.jsonl --output reports/v0.7/dev_en_v3_quality.md
+python tools/audit_dataset_quality.py benchmark/data/v0.3/dev_ru_v3.jsonl --output reports/v0.7/dev_ru_v3_quality.md
+```
+
+Compare EN/RU structural balance:
+
+```bash
+python tools/compare_dataset_splits.py benchmark/data/v0.3/dev_en_v3.jsonl benchmark/data/v0.3/dev_ru_v3.jsonl --output reports/v0.7/en_ru_v3_split_comparison.md
+```
 
 ## Limitations
 
