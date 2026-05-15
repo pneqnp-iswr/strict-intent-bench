@@ -1,0 +1,492 @@
+[
+  {
+    "id": "dev_en_v3_short_02",
+    "title": "standalone security acronym",
+    "category": "short_fragment",
+    "mode": "strict",
+    "acceptable_actions": [
+      "clarify"
+    ],
+    "success_criteria": "Choose the action justified by immediate context. Ask one narrow clarification only when the fragment lacks a clear pending task; execute directly when it clearly selects from a pending task.",
+    "response": "Do you want SSL risks explained, troubleshooting steps, or a short summary?",
+    "latency_seconds": "1.866",
+    "input_tokens": "1473",
+    "output_tokens": "51",
+    "total_tokens": "1524",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "True",
+    "grade_notes": "The fragment clearly selected the pending SSL topic, so the assistant should have responded directly instead of asking what kind of SSL help was wanted.",
+    "expected_action": "ask_clarification",
+    "ambiguity_level": "high",
+    "pending_context_strength": "weak",
+    "operation_required": false,
+    "notes": "SSL alone could mean explain, fix, enable, or compare.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "We discussed deployment risks: DNS, SSL, and secrets."
+      },
+      {
+        "role": "user",
+        "content": "SSL"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_short_03",
+    "title": "standalone metric",
+    "category": "short_fragment",
+    "mode": "strict",
+    "acceptable_actions": [
+      "clarify"
+    ],
+    "success_criteria": "Choose the action justified by immediate context. Ask one narrow clarification only when the fragment lacks a clear pending task; execute directly when it clearly selects from a pending task.",
+    "response": "Do you want the latency numbers, an explanation, or a short summary?",
+    "latency_seconds": "2.082",
+    "input_tokens": "1473",
+    "output_tokens": "49",
+    "total_tokens": "1522",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "True",
+    "grade_notes": "The fragment clearly selects the latency item from the prior context, so a direct response was expected.",
+    "expected_action": "ask_clarification",
+    "ambiguity_level": "high",
+    "pending_context_strength": "weak",
+    "operation_required": false,
+    "notes": "Metric name alone lacks operation.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "The report includes latency, cost, and pass rate."
+      },
+      {
+        "role": "user",
+        "content": "latency"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_short_10",
+    "title": "short noun after broad topic",
+    "category": "short_fragment",
+    "mode": "strict",
+    "acceptable_actions": [
+      "clarify"
+    ],
+    "success_criteria": "Choose the action justified by immediate context. Ask one narrow clarification only when the fragment lacks a clear pending task; execute directly when it clearly selects from a pending task.",
+    "response": "Do you want a short explanation of databases, database options, or help choosing one?",
+    "latency_seconds": "2.202",
+    "input_tokens": "1471",
+    "output_tokens": "52",
+    "total_tokens": "1523",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "True",
+    "grade_notes": "The user’s fragment clearly selects the databases topic, so a direct answer was expected.",
+    "expected_action": "ask_clarification",
+    "ambiguity_level": "high",
+    "pending_context_strength": "weak",
+    "operation_required": false,
+    "notes": "Topic word lacks requested action.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "We covered hosting, databases, and analytics."
+      },
+      {
+        "role": "user",
+        "content": "databases"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_short_15",
+    "title": "standalone device word",
+    "category": "short_fragment",
+    "mode": "strict",
+    "acceptable_actions": [
+      "clarify"
+    ],
+    "success_criteria": "Choose the action justified by immediate context. Ask one narrow clarification only when the fragment lacks a clear pending task; execute directly when it clearly selects from a pending task.",
+    "response": "Do you want antivirus troubleshooting steps or just whether antivirus could be the cause?",
+    "latency_seconds": "1.993",
+    "input_tokens": "1476",
+    "output_tokens": "52",
+    "total_tokens": "1528",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "True",
+    "grade_notes": "The user’s one-word reply clearly selects the antivirus branch, so a direct response was warranted.",
+    "expected_action": "ask_clarification",
+    "ambiguity_level": "medium",
+    "pending_context_strength": "weak",
+    "operation_required": false,
+    "notes": "The word may be a suspected cause but does not request a step.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "The issue might be browser, VPN, antivirus, or device related."
+      },
+      {
+        "role": "user",
+        "content": "antivirus"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_short_19",
+    "title": "single length after pending answer",
+    "category": "short_fragment",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Choose the action justified by immediate context. Ask one narrow clarification only when the fragment lacks a clear pending task; execute directly when it clearly selects from a pending task.",
+    "response": "Short version — please send the text or topic.",
+    "latency_seconds": "4.195",
+    "input_tokens": "1471",
+    "output_tokens": "153",
+    "total_tokens": "1624",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "It asks for missing content instead of directly responding to the selected short version.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Length selection answers the immediate question.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Do you want the long version or short version?"
+      },
+      {
+        "role": "user",
+        "content": "short"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_ack_11",
+    "title": "continue after chosen file",
+    "category": "acknowledgment_or_correction",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Handle acknowledgments and corrections without inventing a new task. Continue only when the immediate context contains a clear pending action.",
+    "response": "Go ahead with what specific change to `run_eval.py`?",
+    "latency_seconds": "12.167",
+    "input_tokens": "1473",
+    "output_tokens": "535",
+    "total_tokens": "2008",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "True",
+    "grade_notes": "The user already approved the pending update, so the reply should have proceeded instead of asking for a new specification.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Clear approval to perform pending edit.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "I can update run_eval.py now if you approve."
+      },
+      {
+        "role": "user",
+        "content": "go ahead"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_ack_16",
+    "title": "approval for concise output",
+    "category": "acknowledgment_or_correction",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Handle acknowledgments and corrections without inventing a new task. Continue only when the immediate context contains a clear pending action.",
+    "response": "Use the immediate prior context to decide intent. If the user selects a concrete offered option, execute it directly; if they provide only an ambiguous topic or quoted identifier, clarify or acknowledge briefly.",
+    "latency_seconds": "3.401",
+    "input_tokens": "1470",
+    "output_tokens": "116",
+    "total_tokens": "1586",
+    "grade_verdict": "fail",
+    "grade_primary_action": "other",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "The reply gives meta-guidance instead of carrying out the requested concise summary.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "The instruction executes the pending task.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "I can give a concise final summary."
+      },
+      {
+        "role": "user",
+        "content": "do it"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_04",
+    "title": "translate to English",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "Here is the Russian text for the post.",
+    "latency_seconds": "2.459",
+    "input_tokens": "1469",
+    "output_tokens": "57",
+    "total_tokens": "1526",
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "The reply did not translate the text into English and instead just restated it.",
+    "expected_action": "answer_directly",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Requested language transform is clear.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Вот русский текст для поста."
+      },
+      {
+        "role": "user",
+        "content": "in English"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_05",
+    "title": "PowerShell selection",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "```powershell\n# PowerShell template\n<command> -Argument \"<value>\"\n```",
+    "latency_seconds": "4.49",
+    "input_tokens": "1473",
+    "output_tokens": "165",
+    "total_tokens": "1638",
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "It responded with a generic template instead of directly handling the PowerShell selection.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Shell selection is explicit.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "I can give the command for Bash or PowerShell."
+      },
+      {
+        "role": "user",
+        "content": "PowerShell"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_06",
+    "title": "JSON schema request",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "{\n  \"case\": {}\n}",
+    "latency_seconds": "2.649",
+    "input_tokens": "1471",
+    "output_tokens": "83",
+    "total_tokens": "1554",
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "The user clearly selected JSON, but the candidate did not produce the requested JSON representation.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Output format selection is explicit.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "I can represent the case as YAML or JSON."
+      },
+      {
+        "role": "user",
+        "content": "JSON"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_09",
+    "title": "run only validation",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "```bash\npython -m json.tool your_file.jsonl >/dev/null\n```\n\nFor true JSONL validation:\n\n```bash\npython - <<'PY'\nimport json, sys\n\npath = \"your_file.jsonl\"\nok = True\n\nwith open(path, \"r\", encoding=\"utf-8\") as f:\n    for i, line in enumerate(f, 1):\n        line = line.strip()\n        if not line:\n            print(f\"Line {i}: empty line\")\n            ok = False\n            continue\n        try:\n            json.loads(line)\n        except json.JSONDecodeError as e:\n            print(f\"Line {i}: invalid JSON — {e}\")\n            ok = False\n\nprint(\"VALID\" if ok else \"INVALID\")\nsys.exit(0 if ok else 1)\nPY\n```",
+    "latency_seconds": "4.297",
+    "input_tokens": "1473",
+    "output_tokens": "261",
+    "total_tokens": "1734",
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "It gave validation commands instead of directly performing the requested validation-only action.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Action restriction is explicit.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "I can generate cases or validate the existing JSONL."
+      },
+      {
+        "role": "user",
+        "content": "validate only"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_11",
+    "title": "compress README section",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "README section too long.",
+    "latency_seconds": "1.793",
+    "input_tokens": "1470",
+    "output_tokens": "50",
+    "total_tokens": "1520",
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": "False",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "It did not compress the text; it only restated the original idea.",
+    "expected_action": "answer_directly",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Edit request is clear.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "The README section is currently too long."
+      },
+      {
+        "role": "user",
+        "content": "compress it"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_14",
+    "title": "remove extra detail",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "This paragraph is too detailed.",
+    "latency_seconds": "2.525",
+    "input_tokens": "1471",
+    "output_tokens": "112",
+    "total_tokens": "1583",
+    "grade_verdict": "fail",
+    "grade_primary_action": "answer",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "False",
+    "grade_notes": "It responded with a paraphrase instead of actually removing the extra detail.",
+    "expected_action": "answer_directly",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Edit instruction is clear.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "This paragraph has too much background."
+      },
+      {
+        "role": "user",
+        "content": "remove the extra detail"
+      }
+    ]
+  },
+  {
+    "id": "dev_en_v3_clear_20",
+    "title": "final answer only",
+    "category": "clear_direct",
+    "mode": "strict",
+    "acceptable_actions": [
+      "answer"
+    ],
+    "success_criteria": "Execute the clear requested operation or pending-task selection directly. Do not ask a clarification when the immediate context already fixes the intent.",
+    "response": "Please send the question or task.",
+    "latency_seconds": "4.451",
+    "input_tokens": "1473",
+    "output_tokens": "160",
+    "total_tokens": "1633",
+    "grade_verdict": "fail",
+    "grade_primary_action": "clarify",
+    "grade_wrong_intent_inference": "True",
+    "grade_unnecessary_clarification": "True",
+    "grade_notes": "The intent was already clear as a selection of the assistant’s offered format, so asking for the task was unnecessary.",
+    "expected_action": "continue_pending_task",
+    "ambiguity_level": "low",
+    "pending_context_strength": "strong",
+    "operation_required": true,
+    "notes": "Output constraint is explicit.",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "I can include reasoning steps or final answer only."
+      },
+      {
+        "role": "user",
+        "content": "final answer only"
+      }
+    ]
+  }
+]

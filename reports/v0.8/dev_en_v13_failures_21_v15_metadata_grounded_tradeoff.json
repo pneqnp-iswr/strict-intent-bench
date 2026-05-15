@@ -1,0 +1,370 @@
+{
+  "metadata_coverage": {
+    "cases": 21,
+    "ambiguity_level": {
+      "present": 21,
+      "missing": 0,
+      "coverage_rate": 100.0
+    },
+    "expected_action": {
+      "present": 21,
+      "missing": 0,
+      "coverage_rate": 100.0
+    },
+    "notes": {
+      "present": 21,
+      "missing": 0,
+      "coverage_rate": 100.0
+    },
+    "operation_required": {
+      "present": 21,
+      "missing": 0,
+      "coverage_rate": 100.0
+    },
+    "pending_context_strength": {
+      "present": 21,
+      "missing": 0,
+      "coverage_rate": 100.0
+    },
+    "fully_annotated_cases": 21,
+    "fully_annotated_rate": 100.0
+  },
+  "summary_by_mode": {
+    "baseline": {
+      "cases": 21,
+      "metadata_available_cases": 21,
+      "action_accuracy": 28.6,
+      "wrong_intent_inference_rate": 42.9,
+      "clarification_rate": 23.8,
+      "unnecessary_clarification_rate": 19.0,
+      "metadata_unnecessary_clarification_rate": 23.8,
+      "metadata_needed_clarification_missing_rate": 28.6,
+      "grader_metadata_conflict_rate": 4.8,
+      "overclarification_on_clear_direct_rate": 42.9,
+      "overclarification_on_strong_pending_context_rate": 45.5,
+      "underclarification_on_high_ambiguity_short_fragment_rate": 100.0,
+      "clear_direct_cases": 7,
+      "strong_pending_cases": 11,
+      "high_ambiguity_short_fragment_cases": 3
+    },
+    "strict": {
+      "cases": 21,
+      "metadata_available_cases": 21,
+      "action_accuracy": 66.7,
+      "wrong_intent_inference_rate": 33.3,
+      "clarification_rate": 38.1,
+      "unnecessary_clarification_rate": 28.6,
+      "metadata_unnecessary_clarification_rate": 19.0,
+      "metadata_needed_clarification_missing_rate": 9.5,
+      "grader_metadata_conflict_rate": 28.6,
+      "overclarification_on_clear_direct_rate": 14.3,
+      "overclarification_on_strong_pending_context_rate": 36.4,
+      "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+      "clear_direct_cases": 7,
+      "strong_pending_cases": 11,
+      "high_ambiguity_short_fragment_cases": 3
+    }
+  },
+  "delta_table": [
+    {
+      "metric": "action_accuracy",
+      "baseline": 28.6,
+      "strict": 66.7,
+      "delta_strict_minus_baseline": 38.1
+    },
+    {
+      "metric": "wrong_intent_inference_rate",
+      "baseline": 42.9,
+      "strict": 33.3,
+      "delta_strict_minus_baseline": -9.6
+    },
+    {
+      "metric": "clarification_rate",
+      "baseline": 23.8,
+      "strict": 38.1,
+      "delta_strict_minus_baseline": 14.3
+    },
+    {
+      "metric": "unnecessary_clarification_rate",
+      "baseline": 19.0,
+      "strict": 28.6,
+      "delta_strict_minus_baseline": 9.6
+    },
+    {
+      "metric": "metadata_unnecessary_clarification_rate",
+      "baseline": 23.8,
+      "strict": 19.0,
+      "delta_strict_minus_baseline": -4.8
+    },
+    {
+      "metric": "metadata_needed_clarification_missing_rate",
+      "baseline": 28.6,
+      "strict": 9.5,
+      "delta_strict_minus_baseline": -19.1
+    },
+    {
+      "metric": "grader_metadata_conflict_rate",
+      "baseline": 4.8,
+      "strict": 28.6,
+      "delta_strict_minus_baseline": 23.8
+    },
+    {
+      "metric": "overclarification_on_clear_direct_rate",
+      "baseline": 42.9,
+      "strict": 14.3,
+      "delta_strict_minus_baseline": -28.6
+    },
+    {
+      "metric": "overclarification_on_strong_pending_context_rate",
+      "baseline": 45.5,
+      "strict": 36.4,
+      "delta_strict_minus_baseline": -9.1
+    },
+    {
+      "metric": "underclarification_on_high_ambiguity_short_fragment_rate",
+      "baseline": 100.0,
+      "strict": 0.0,
+      "delta_strict_minus_baseline": -100.0
+    }
+  ],
+  "action_accuracy_by_expected_action": {
+    "baseline": {
+      "acknowledge_correction": {
+        "cases": 4,
+        "metadata_available_cases": 4,
+        "action_accuracy": 50.0,
+        "wrong_intent_inference_rate": 75.0,
+        "clarification_rate": 0.0,
+        "unnecessary_clarification_rate": 0.0,
+        "metadata_unnecessary_clarification_rate": 0.0,
+        "metadata_needed_clarification_missing_rate": 0.0,
+        "grader_metadata_conflict_rate": 0.0,
+        "overclarification_on_clear_direct_rate": 0.0,
+        "overclarification_on_strong_pending_context_rate": 0.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 0,
+        "strong_pending_cases": 0,
+        "high_ambiguity_short_fragment_cases": 0
+      },
+      "answer_directly": {
+        "cases": 3,
+        "metadata_available_cases": 3,
+        "action_accuracy": 66.7,
+        "wrong_intent_inference_rate": 33.3,
+        "clarification_rate": 33.3,
+        "unnecessary_clarification_rate": 33.3,
+        "metadata_unnecessary_clarification_rate": 33.3,
+        "metadata_needed_clarification_missing_rate": 0.0,
+        "grader_metadata_conflict_rate": 0.0,
+        "overclarification_on_clear_direct_rate": 33.3,
+        "overclarification_on_strong_pending_context_rate": 33.3,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 3,
+        "strong_pending_cases": 3,
+        "high_ambiguity_short_fragment_cases": 0
+      },
+      "ask_clarification": {
+        "cases": 6,
+        "metadata_available_cases": 6,
+        "action_accuracy": 0.0,
+        "wrong_intent_inference_rate": 33.3,
+        "clarification_rate": 0.0,
+        "unnecessary_clarification_rate": 0.0,
+        "metadata_unnecessary_clarification_rate": 0.0,
+        "metadata_needed_clarification_missing_rate": 100.0,
+        "grader_metadata_conflict_rate": 0.0,
+        "overclarification_on_clear_direct_rate": 0.0,
+        "overclarification_on_strong_pending_context_rate": 0.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 100.0,
+        "clear_direct_cases": 0,
+        "strong_pending_cases": 0,
+        "high_ambiguity_short_fragment_cases": 3
+      },
+      "continue_pending_task": {
+        "cases": 8,
+        "metadata_available_cases": 8,
+        "action_accuracy": 25.0,
+        "wrong_intent_inference_rate": 37.5,
+        "clarification_rate": 50.0,
+        "unnecessary_clarification_rate": 37.5,
+        "metadata_unnecessary_clarification_rate": 50.0,
+        "metadata_needed_clarification_missing_rate": 0.0,
+        "grader_metadata_conflict_rate": 12.5,
+        "overclarification_on_clear_direct_rate": 50.0,
+        "overclarification_on_strong_pending_context_rate": 50.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 4,
+        "strong_pending_cases": 8,
+        "high_ambiguity_short_fragment_cases": 0
+      }
+    },
+    "strict": {
+      "acknowledge_correction": {
+        "cases": 4,
+        "metadata_available_cases": 4,
+        "action_accuracy": 100.0,
+        "wrong_intent_inference_rate": 0.0,
+        "clarification_rate": 0.0,
+        "unnecessary_clarification_rate": 0.0,
+        "metadata_unnecessary_clarification_rate": 0.0,
+        "metadata_needed_clarification_missing_rate": 0.0,
+        "grader_metadata_conflict_rate": 0.0,
+        "overclarification_on_clear_direct_rate": 0.0,
+        "overclarification_on_strong_pending_context_rate": 0.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 0,
+        "strong_pending_cases": 0,
+        "high_ambiguity_short_fragment_cases": 0
+      },
+      "answer_directly": {
+        "cases": 3,
+        "metadata_available_cases": 3,
+        "action_accuracy": 100.0,
+        "wrong_intent_inference_rate": 66.7,
+        "clarification_rate": 0.0,
+        "unnecessary_clarification_rate": 0.0,
+        "metadata_unnecessary_clarification_rate": 0.0,
+        "metadata_needed_clarification_missing_rate": 0.0,
+        "grader_metadata_conflict_rate": 0.0,
+        "overclarification_on_clear_direct_rate": 0.0,
+        "overclarification_on_strong_pending_context_rate": 0.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 3,
+        "strong_pending_cases": 3,
+        "high_ambiguity_short_fragment_cases": 0
+      },
+      "ask_clarification": {
+        "cases": 6,
+        "metadata_available_cases": 6,
+        "action_accuracy": 66.7,
+        "wrong_intent_inference_rate": 0.0,
+        "clarification_rate": 66.7,
+        "unnecessary_clarification_rate": 66.7,
+        "metadata_unnecessary_clarification_rate": 0.0,
+        "metadata_needed_clarification_missing_rate": 33.3,
+        "grader_metadata_conflict_rate": 66.7,
+        "overclarification_on_clear_direct_rate": 0.0,
+        "overclarification_on_strong_pending_context_rate": 0.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 0,
+        "strong_pending_cases": 0,
+        "high_ambiguity_short_fragment_cases": 3
+      },
+      "continue_pending_task": {
+        "cases": 8,
+        "metadata_available_cases": 8,
+        "action_accuracy": 37.5,
+        "wrong_intent_inference_rate": 62.5,
+        "clarification_rate": 50.0,
+        "unnecessary_clarification_rate": 25.0,
+        "metadata_unnecessary_clarification_rate": 50.0,
+        "metadata_needed_clarification_missing_rate": 0.0,
+        "grader_metadata_conflict_rate": 25.0,
+        "overclarification_on_clear_direct_rate": 25.0,
+        "overclarification_on_strong_pending_context_rate": 50.0,
+        "underclarification_on_high_ambiguity_short_fragment_rate": 0.0,
+        "clear_direct_cases": 4,
+        "strong_pending_cases": 8,
+        "high_ambiguity_short_fragment_cases": 0
+      }
+    }
+  },
+  "wrong_intent_by_expected_action": {
+    "baseline": {
+      "acknowledge_correction": {
+        "cases": 4,
+        "wrong_intent_inference_rate": 75.0
+      },
+      "answer_directly": {
+        "cases": 3,
+        "wrong_intent_inference_rate": 33.3
+      },
+      "ask_clarification": {
+        "cases": 6,
+        "wrong_intent_inference_rate": 33.3
+      },
+      "continue_pending_task": {
+        "cases": 8,
+        "wrong_intent_inference_rate": 37.5
+      }
+    },
+    "strict": {
+      "acknowledge_correction": {
+        "cases": 4,
+        "wrong_intent_inference_rate": 0.0
+      },
+      "answer_directly": {
+        "cases": 3,
+        "wrong_intent_inference_rate": 66.7
+      },
+      "ask_clarification": {
+        "cases": 6,
+        "wrong_intent_inference_rate": 0.0
+      },
+      "continue_pending_task": {
+        "cases": 8,
+        "wrong_intent_inference_rate": 62.5
+      }
+    }
+  },
+  "clarification_by_ambiguity_level": {
+    "baseline": {
+      "high": {
+        "cases": 3,
+        "clarification_rate": 0.0
+      },
+      "low": {
+        "cases": 15,
+        "clarification_rate": 33.3
+      },
+      "medium": {
+        "cases": 3,
+        "clarification_rate": 0.0
+      }
+    },
+    "strict": {
+      "high": {
+        "cases": 3,
+        "clarification_rate": 100.0
+      },
+      "low": {
+        "cases": 15,
+        "clarification_rate": 26.7
+      },
+      "medium": {
+        "cases": 3,
+        "clarification_rate": 33.3
+      }
+    }
+  },
+  "clarification_by_pending_context_strength": {
+    "baseline": {
+      "none": {
+        "cases": 1,
+        "clarification_rate": 0.0
+      },
+      "strong": {
+        "cases": 11,
+        "clarification_rate": 45.5
+      },
+      "weak": {
+        "cases": 9,
+        "clarification_rate": 0.0
+      }
+    },
+    "strict": {
+      "none": {
+        "cases": 1,
+        "clarification_rate": 0.0
+      },
+      "strong": {
+        "cases": 11,
+        "clarification_rate": 36.4
+      },
+      "weak": {
+        "cases": 9,
+        "clarification_rate": 44.4
+      }
+    }
+  }
+}
