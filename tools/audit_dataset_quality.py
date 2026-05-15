@@ -32,6 +32,16 @@ WEAK_SUCCESS_PHRASES = {
     "respond appropriately",
 }
 
+# Legacy acceptable_actions values are intentionally coarser than v0.3 expected_action.
+# This map prevents false-positive warnings such as ask_clarification not matching "clarify".
+EXPECTED_TO_ACCEPTABLE_ALIASES = {
+    "answer_directly": {"answer", "direct_answer", "answer_directly"},
+    "ask_clarification": {"clarify", "ask_clarification", "ask"},
+    "acknowledge_correction": {"acknowledge", "acknowledge_correction"},
+    "continue_pending_task": {"answer", "continue", "continue_pending_task"},
+    "avoid_unasked_execution": {"clarify", "acknowledge", "refuse", "avoid_unasked_execution"},
+}
+
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     items: list[dict[str, Any]] = []
@@ -64,6 +74,14 @@ def compact_messages(messages: Any) -> str:
 
 def add_issue(issues: list[dict[str, str]], severity: str, case_id: str, message: str) -> None:
     issues.append({"severity": severity, "case_id": case_id, "message": message})
+
+
+def acceptable_action_matches(expected_action: Any, acceptable_actions: Any) -> bool:
+    if expected_action is None or not isinstance(acceptable_actions, list):
+        return True
+    normalized = {str(action).strip().lower() for action in acceptable_actions}
+    allowed = EXPECTED_TO_ACCEPTABLE_ALIASES.get(str(expected_action), {str(expected_action)})
+    return bool(normalized & allowed)
 
 
 def audit_case(item: dict[str, Any]) -> list[dict[str, str]]:
@@ -103,8 +121,8 @@ def audit_case(item: dict[str, Any]) -> list[dict[str, str]]:
         if phrase in success_lower:
             add_issue(issues, "warning", case_id, f"success_criteria contains weak phrase: {phrase!r}")
 
-    if expected_action is not None and expected_action not in str(acceptable_actions):
-        add_issue(issues, "warning", case_id, "expected_action is not present in acceptable_actions")
+    if not acceptable_action_matches(expected_action, acceptable_actions):
+        add_issue(issues, "warning", case_id, "expected_action does not align with acceptable_actions aliases")
 
     if "notes" in item and len(notes) < 20:
         add_issue(issues, "warning", case_id, "notes field is very short")
@@ -131,8 +149,8 @@ def audit_case(item: dict[str, Any]) -> list[dict[str, str]]:
     if ambiguity_level == "high" and expected_action in {"answer_directly", "continue_pending_task"} and pending_context_strength != "strong":
         add_issue(issues, "warning", case_id, "high ambiguity with direct action but without strong pending context")
 
-    if category == "acknowledgment_or_correction" and expected_action not in {None, "acknowledge_correction", "continue_pending_task"}:
-        add_issue(issues, "warning", case_id, "acknowledgment_or_correction expected_action should usually acknowledge or continue")
+    if category == "acknowledgment_or_correction" and expected_action not in {None, "acknowledge_correction", "continue_pending_task", "ask_clarification"}:
+        add_issue(issues, "warning", case_id, "acknowledgment_or_correction expected_action should usually acknowledge, clarify, or continue")
 
     return issues
 
