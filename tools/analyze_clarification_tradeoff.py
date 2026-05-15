@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -65,16 +65,50 @@ def pct(numerator: int, denominator: int) -> float:
     return round((numerator / denominator) * 100, 1)
 
 
+def expected_action(row: dict[str, Any]) -> str:
+    return str(row.get("expected_action", "unspecified")).strip()
+
+
+def primary_action(row: dict[str, Any]) -> str:
+    return str(row.get("grade_primary_action", "")).strip().lower()
+
+
+def has_expected_action(row: dict[str, Any]) -> bool:
+    expected = expected_action(row)
+    return bool(expected and expected != "unspecified")
+
+
 def is_clarification(row: dict[str, Any]) -> bool:
-    return str(row.get("grade_primary_action", "")).strip().lower() in CLARIFY_ACTIONS
+    return primary_action(row) in CLARIFY_ACTIONS
 
 
 def action_correct(row: dict[str, Any]) -> bool:
-    expected = str(row.get("expected_action", "")).strip()
-    primary = str(row.get("grade_primary_action", "")).strip().lower()
-    if not expected or expected == "unspecified":
+    expected = expected_action(row)
+    primary = primary_action(row)
+    if not has_expected_action(row):
         return False
     return expected in PRIMARY_TO_EXPECTED_ALIASES.get(primary, {primary})
+
+
+def metadata_unnecessary_clarification(row: dict[str, Any]) -> bool:
+    """Alias-aware metadata check for clarification that should not have happened.
+
+    This intentionally does not use the blunt rule "expected_action != ask_clarification".
+    Some labels, such as avoid_unasked_execution, can allow clarification as a valid action.
+    """
+    return has_expected_action(row) and is_clarification(row) and not action_correct(row)
+
+
+def metadata_needed_clarification_missing(row: dict[str, Any]) -> bool:
+    return has_expected_action(row) and expected_action(row) == "ask_clarification" and not is_clarification(row)
+
+
+def grader_metadata_conflict(row: dict[str, Any]) -> bool:
+    if not has_expected_action(row) or not is_clarification(row):
+        return False
+    grader_says_unnecessary = truthy(row.get("grade_unnecessary_clarification"))
+    metadata_says_unnecessary = metadata_unnecessary_clarification(row)
+    return grader_says_unnecessary != metadata_says_unnecessary
 
 
 def detect_metadata_coverage(dataset_rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -87,7 +121,11 @@ def detect_metadata_coverage(dataset_rows: list[dict[str, Any]]) -> dict[str, An
             "missing": total - present,
             "coverage_rate": pct(present, total),
         }
-    fully_annotated = sum(1 for item in dataset_rows if all(field in item and item.get(field) not in {None, ""} for field in METADATA_FIELDS))
+    fully_annotated = sum(
+        1
+        for item in dataset_rows
+        if all(field in item and item.get(field) not in {None, ""} for field in METADATA_FIELDS)
+    )
     coverage["fully_annotated_cases"] = fully_annotated
     coverage["fully_annotated_rate"] = pct(fully_annotated, total)
     return coverage
@@ -155,10 +193,14 @@ def group_by(rows: Iterable[dict[str, Any]], key: str) -> dict[str, list[dict[st
 def mode_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(rows)
     wrong_intent = sum(1 for row in rows if truthy(row.get("grade_wrong_intent_inference")))
-    unnecessary_clarification = sum(1 for row in rows if truthy(row.get("grade_unnecessary_clarification")))
+    raw_unnecessary_clarification = sum(1 for row in rows if truthy(row.get("grade_unnecessary_clarification")))
     clarifications = sum(1 for row in rows if is_clarification(row))
-    metadata_available_rows = [row for row in rows if row.get("expected_action") != "unspecified"]
+    metadata_available_rows = [row for row in rows if has_expected_action(row)]
     action_correct_count = sum(1 for row in metadata_available_rows if action_correct(row))
+
+    metadata_unnecessary = sum(1 for row in metadata_available_rows if metadata_unnecessary_clarification(row))
+    metadata_needed_missing = sum(1 for row in metadata_available_rows if metadata_needed_clarification_missing(row))
+    metadata_conflicts = sum(1 for row in metadata_available_rows if grader_metadata_conflict(row))
 
     clear_direct = [row for row in rows if row.get("category") == "clear_direct"]
     strong_pending = [row for row in rows if row.get("pending_context_strength") == "strong"]
@@ -173,12 +215,12 @@ def mode_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     over_clear_direct = sum(
         1
         for row in clear_direct
-        if is_clarification(row) and row.get("expected_action") != "ask_clarification"
+        if is_clarification(row) and not action_correct(row)
     )
     over_strong_pending = sum(
         1
         for row in strong_pending
-        if is_clarification(row) and row.get("expected_action") != "ask_clarification"
+        if is_clarification(row) and not action_correct(row)
     )
     under_high_short = sum(1 for row in high_ambiguity_short if not is_clarification(row))
 
@@ -188,7 +230,10 @@ def mode_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "action_accuracy": pct(action_correct_count, len(metadata_available_rows)),
         "wrong_intent_inference_rate": pct(wrong_intent, total),
         "clarification_rate": pct(clarifications, total),
-        "unnecessary_clarification_rate": pct(unnecessary_clarification, total),
+        "unnecessary_clarification_rate": pct(raw_unnecessary_clarification, total),
+        "metadata_unnecessary_clarification_rate": pct(metadata_unnecessary, len(metadata_available_rows)),
+        "metadata_needed_clarification_missing_rate": pct(metadata_needed_missing, len(metadata_available_rows)),
+        "grader_metadata_conflict_rate": pct(metadata_conflicts, len(metadata_available_rows)),
         "overclarification_on_clear_direct_rate": pct(over_clear_direct, len(clear_direct)),
         "overclarification_on_strong_pending_context_rate": pct(over_strong_pending, len(strong_pending)),
         "underclarification_on_high_ambiguity_short_fragment_rate": pct(under_high_short, len(high_ambiguity_short)),
@@ -213,6 +258,9 @@ def metric_delta(summary: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
         "wrong_intent_inference_rate",
         "clarification_rate",
         "unnecessary_clarification_rate",
+        "metadata_unnecessary_clarification_rate",
+        "metadata_needed_clarification_missing_rate",
+        "grader_metadata_conflict_rate",
         "overclarification_on_clear_direct_rate",
         "overclarification_on_strong_pending_context_rate",
         "underclarification_on_high_ambiguity_short_fragment_rate",
@@ -319,6 +367,9 @@ def write_markdown_report(path: Path, case_results_path: Path, dataset_path: Pat
         "wrong_intent_inference_rate",
         "clarification_rate",
         "unnecessary_clarification_rate",
+        "metadata_unnecessary_clarification_rate",
+        "metadata_needed_clarification_missing_rate",
+        "grader_metadata_conflict_rate",
         "overclarification_on_clear_direct_rate",
         "overclarification_on_strong_pending_context_rate",
         "underclarification_on_high_ambiguity_short_fragment_rate",
@@ -327,6 +378,39 @@ def write_markdown_report(path: Path, case_results_path: Path, dataset_path: Pat
     for mode, metrics in report["summary_by_mode"].items():
         summary_rows.append([mode, *[metrics.get(metric, 0) for metric in metric_names]])
     lines.extend(md_table(["mode", *metric_names], summary_rows))
+    lines.append("")
+
+    lines.append("## Metadata-normalized clarification checks")
+    lines.append("")
+    normalized_rows = []
+    for mode, metrics in report["summary_by_mode"].items():
+        normalized_rows.append(
+            [
+                mode,
+                metrics["cases"],
+                metrics["metadata_available_cases"],
+                metrics["metadata_unnecessary_clarification_rate"],
+                metrics["metadata_needed_clarification_missing_rate"],
+                metrics["grader_metadata_conflict_rate"],
+            ]
+        )
+    lines.extend(
+        md_table(
+            [
+                "mode",
+                "cases",
+                "metadata_available_cases",
+                "metadata_unnecessary_clarification_rate",
+                "metadata_needed_clarification_missing_rate",
+                "grader_metadata_conflict_rate",
+            ],
+            normalized_rows,
+        )
+    )
+    lines.append("")
+    lines.append(
+        "These checks are alias-aware: a clarification can be valid for `avoid_unasked_execution`, so it is not automatically treated as unnecessary merely because `expected_action != ask_clarification`."
+    )
     lines.append("")
 
     lines.append("## Baseline vs strict delta")
@@ -342,7 +426,10 @@ def write_markdown_report(path: Path, case_results_path: Path, dataset_path: Pat
     lines.append("")
     for mode, breakdown_data in report["action_accuracy_by_expected_action"].items():
         lines.append(f"### {mode}")
-        rows = [[expected, values["cases"], values["metadata_available_cases"], values["action_accuracy"]] for expected, values in breakdown_data.items()]
+        rows = [
+            [expected, values["cases"], values["metadata_available_cases"], values["action_accuracy"]]
+            for expected, values in breakdown_data.items()
+        ]
         lines.extend(md_table(["expected_action", "cases", "metadata_available_cases", "action_accuracy"], rows))
         lines.append("")
 
