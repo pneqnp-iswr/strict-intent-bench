@@ -22,6 +22,18 @@ Initial RU/EN runs suggest that Strict / Precision behavior can reduce wrong-int
 
 ![Measured summary](docs/measured-summary.png)
 
+## Documentation
+
+Core project docs:
+
+- [Public summary](reports/v0.6/public_summary.md)
+- [Dataset card](docs/dataset_card.md)
+- [Error taxonomy](docs/error_taxonomy.md)
+- [Annotation guidelines](docs/annotation_guidelines.md)
+- [Manual audit protocol](benchmark/manual/audit_protocol_v0.6.md)
+- [No-API reproduction guide](benchmark/manual/no_api_reproduction.md)
+- [Roadmap](ROADMAP.md)
+
 ## Repository structure
 
 ```text
@@ -34,7 +46,14 @@ strict-intent-bench/
 ├─ baselines/
 │  ├─ no_prompt/
 │  └─ strict_v8/
+├─ docs/
+│  ├─ demo.html
+│  ├─ dataset_card.md
+│  ├─ error_taxonomy.md
+│  └─ annotation_guidelines.md
+├─ reports/
 ├─ results/
+├─ ROADMAP.md
 ├─ README.md
 ├─ report.md
 ├─ requirements.txt
@@ -176,6 +195,18 @@ Default paths:
 - grader: `benchmark/prompts/grader.txt`
 - baseline prompt: `baselines/no_prompt/baseline.txt`
 - strict prompt: `baselines/strict_v8/strict.txt`
+
+## No-API inspection
+
+The benchmark can be inspected without API access:
+
+- open the [live demo](https://pneqnp-iswr.github.io/strict-intent-bench/);
+- read the [dataset card](docs/dataset_card.md);
+- validate local JSONL files;
+- use the [manual audit protocol](benchmark/manual/audit_protocol_v0.6.md);
+- follow the [no-API reproduction guide](benchmark/manual/no_api_reproduction.md).
+
+No-API inspection does not replace measured model evaluation, but it makes the artifact reviewable without private runs.
 
 ## Limitations
 
