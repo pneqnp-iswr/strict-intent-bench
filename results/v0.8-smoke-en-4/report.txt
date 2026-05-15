@@ -1,0 +1,29 @@
+Strict Mode Eval Report
+
+[baseline]
+cases: 4
+pass_rate: 0.0
+wrong_intent_inference_rate: 100.0
+unnecessary_clarification_rate: 0.0
+clarification_rate: 0.0
+avg_latency_seconds: 5.401
+avg_input_tokens: 32.75
+avg_output_tokens: 147.25
+avg_total_tokens: 180.0
+
+[strict]
+cases: 4
+pass_rate: 0.0
+wrong_intent_inference_rate: 75.0
+unnecessary_clarification_rate: 100.0
+clarification_rate: 100.0
+avg_latency_seconds: 3.985
+avg_input_tokens: 962.75
+avg_output_tokens: 109.0
+avg_total_tokens: 1071.75
+
+Strict improved on these cases:
+- none
+
+Strict regressed on these cases:
+- none

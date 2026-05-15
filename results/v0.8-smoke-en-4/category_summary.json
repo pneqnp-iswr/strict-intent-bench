@@ -1,0 +1,14 @@
+{
+  "baseline": {
+    "quoted_reply": {
+      "cases": 4,
+      "pass_rate": 0.0
+    }
+  },
+  "strict": {
+    "quoted_reply": {
+      "cases": 4,
+      "pass_rate": 0.0
+    }
+  }
+}

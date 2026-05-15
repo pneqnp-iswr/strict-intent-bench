@@ -1,0 +1,56 @@
+id,title,category,mode,acceptable_actions,success_criteria,response,latency_seconds,input_tokens,output_tokens,total_tokens,grade_verdict,grade_primary_action,grade_wrong_intent_inference,grade_unnecessary_clarification,grade_notes
+dev_en_v3_quoted_01,tone label quote after edit suggestion,quoted_reply,baseline,"clarify, acknowledge","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.","Here are some alternatives to **“less aggressive”**:
+
+- more neutral
+- more measured
+- softer in tone
+- less confrontational
+- more diplomatic
+- more professional
+- less forceful
+- more tactful
+- calmer
+- less harsh
+
+Example:  
+**“Can you make the complaint more neutral and professional?”**",8.125,28,142,170,fail,answer,True,False,It treated the quoted text as a request for alternatives instead of referencing prior wording.
+dev_en_v3_quoted_01,tone label quote after edit suggestion,quoted_reply,strict,"clarify, acknowledge","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.",Please send the complaint text you want made less aggressive.,5.165,958,129,1087,fail,clarify,True,True,It wrongly treated the quoted phrase as a request for the complaint text.
+dev_en_v3_quoted_02,quoted shell command after safety warning,quoted_reply,baseline,"clarify, acknowledge, refuse","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.","`rm -rf ./cache` will recursively and forcefully delete the `cache` directory in your current working directory.
+
+Safer options:
+
+```bash
+rm -ri ./cache
+```
+
+or verify first:
+
+```bash
+ls -la ./cache
+pwd
+```
+
+Then, if you’re sure it’s safe:
+
+```bash
+rm -rf ./cache
+```",3.973,38,126,164,fail,answer,True,False,It expanded the quoted command instead of treating it as a reference and simply acknowledging or refusing.
+dev_en_v3_quoted_02,quoted shell command after safety warning,quoted_reply,strict,"clarify, acknowledge, refuse","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.",Do you want an explanation of what this command does or a safer alternative?,2.652,968,72,1040,fail,clarify,True,True,The reply asked for clarification instead of acknowledging the quoted command as prior wording.
+dev_en_v3_quoted_03,quoted date after scheduling answer,quoted_reply,baseline,"clarify, acknowledge","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.","“Next Wednesday” usually means the Wednesday after today.
+
+Today is Friday, May 15, 2026, so **next Wednesday = May 20, 2026**.
+
+To avoid ambiguity, you can say: **“Wednesday, May 20”**.",3.564,32,134,166,fail,answer,True,False,It treated the quoted phrase as a date query and expanded it instead of acknowledging the prior wording.
+dev_en_v3_quoted_03,quoted date after scheduling answer,quoted_reply,strict,"clarify, acknowledge","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.",Do you want to clarify the exact date instead of saying “next Wednesday”?,2.896,962,111,1073,fail,clarify,True,True,The reply treated the quoted phrase as a new request to refine wording instead of simply acknowledging the prior wording.
+dev_en_v3_quoted_04,quoted legal phrase after explanation,quoted_reply,baseline,"clarify, acknowledge","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.","“Without prejudice” means **a statement, offer, or negotiation is made without giving up legal rights or admitting liability**, and generally **can’t be used as evidence in court** to prove an admission.
+
+Common uses:
+
+- **Settlement talks:** “We offer £5,000 without prejudice” = the offer is to settle, not an admission of fault.
+- **Rights preserved:** A party can discuss compromise while still keeping its legal position.
+- **Not final/admissible:** It usually won’t be treated as a binding concession unless a settlement is actually agreed.
+
+Related phrase:
+
+- **“Without prejudice save as to costs”** means the communication is private until after the case is decided, but it may be shown to the court when deciding who should pay legal costs.",5.942,33,187,220,fail,answer,True,False,The reply expanded the phrase instead of simply acknowledging or clarifying the quoted reference.
+dev_en_v3_quoted_04,quoted legal phrase after explanation,quoted_reply,strict,"clarify, acknowledge","Treat the quoted text as a reference to prior wording. Do not execute, rewrite, translate, calculate, or expand unless the requested operation is clear.",Do you want a plain-English explanation of “without prejudice”?,5.228,963,124,1087,fail,clarify,False,True,The reply asked for an explanation when the quoted phrase should have been treated as a reference to prior wording.
