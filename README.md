@@ -14,13 +14,55 @@ This repository presents:
 - a reproducible evaluation runner;
 - a static inspection demo with side-by-side examples;
 - published English and Russian result tracks;
-- **Strict / Precision v8** as one tested intervention, not the whole project.
+- Strict / Precision prompt variants as tested interventions, not the whole project.
 
 ## Current result
 
-Initial RU/EN runs suggest that Strict / Precision behavior can reduce wrong-intent errors, but also reveals a clarification trade-off: fewer wrong assumptions, but more unnecessary clarifying questions.
+The current English v0.8 champion is **Strict / Precision v13**:
+
+```text
+baselines/strict_v13_unseen_pending/strict.txt
+```
+
+On the English v0.3 development set of 80 cases, Strict / Precision v13 improved action accuracy from **38.8%** to **66.2%** and reduced wrong intent inference from **37.5%** to **5.0%**.
+
+| Metric | Baseline | Strict v13 | Delta |
+|---|---:|---:|---:|
+| Action accuracy ↑ | 38.8% | **66.2%** | +27.4 |
+| Wrong intent inference ↓ | 37.5% | **5.0%** | -32.5 |
+| Metadata unnecessary clarification ↓ | 15.0% | **11.2%** | -3.8 |
+| Metadata needed clarification missing ↓ | 30.0% | **15.0%** | -15.0 |
+| Overclarification on clear direct ↓ | 35.0% | **25.0%** | -10.0 |
+| Overclarification on strong pending context ↓ | 36.4% | **24.2%** | -12.2 |
+| Underclarification on high-ambiguity short fragments ↓ | 60.0% | **0.0%** | -60.0 |
+
+This is a measured improvement, not a final solution. v13 did not reach the stronger 75% full-set action-accuracy target, and later v15 experiments remained unstable across mini-checks.
 
 ![Measured summary](docs/measured-summary.png)
+
+## v0.8 decision
+
+For v0.8 English reporting:
+
+- public champion: `baselines/strict_v13_unseen_pending/strict.txt`
+- experimental branch: `baselines/strict_v15_metadata_grounded/strict.txt`
+- rejected branch: `baselines/strict_v14_full80_failurefix/strict.txt`
+
+Supporting reports:
+
+- [v0.8 English result summary](reports/v0.8/v0.8_en_result_summary.md)
+- [Full EN 80 v13 trade-off report](reports/v0.8/dev_en_full_80_v13_unseen_pending_tradeoff.md)
+- [v15 balanced-16 check](reports/v0.8/dev_en_balanced_16_v15_metadata_grounded_tradeoff.md)
+- [v15 unseen-balanced-16 check](reports/v0.8/dev_en_unseen_balanced_16_v15_metadata_grounded_tradeoff.md)
+- [v15 stronger-grader regrade on v13 failures](reports/v0.8/dev_en_v13_failures_21_v15_regrade_g54_tradeoff.md)
+
+A careful public claim is:
+
+```text
+On the English v0.3 development set of 80 cases, Strict / Precision v13 improved action accuracy from 38.8% to 66.2% and reduced wrong intent inference from 37.5% to 5.0%.
+```
+
+Do not read this as a claim that strict prompting is universally better or that wrong intent inference is solved.
 
 ## Documentation
 
@@ -46,6 +88,9 @@ No-API development and inspection tools:
 - `tools/compare_dataset_splits.py` compares structural balance across two JSONL splits.
 - `tools/export_demo_cases.py` rebuilds the static demo data.
 - `tools/make_manual_eval_sheet.py`, `tools/score_manual_eval.py`, and `tools/heuristic_grade_manual_eval.py` support manual/no-API evaluation workflows.
+- `tools/build_prompt_synthesis_pack.py` builds evidence packs for prompt-design audits.
+- `tools/export_case_failures.py` joins graded failures with dataset metadata for forensic analysis.
+- `tools/regrade_case_results.py` regrades existing outputs with a stronger grader without regenerating candidate answers.
 
 ## Repository structure
 
@@ -58,7 +103,9 @@ strict-intent-bench/
 │  └─ README.md
 ├─ baselines/
 │  ├─ no_prompt/
-│  └─ strict_v8/
+│  ├─ strict_v8/
+│  ├─ strict_v13_unseen_pending/
+│  └─ strict_v15_metadata_grounded/
 ├─ docs/
 │  ├─ demo.html
 │  ├─ dataset_card.md
@@ -87,11 +134,11 @@ The benchmark covers four conversational categories:
 - `acknowledgment_or_correction`
 - `clear_direct`
 
-The main remaining weak spot is `short_fragment`.
+The main remaining weak spots are `short_fragment`, `ask_clarification`, and `continue_pending_task` boundary cases.
 
-## Current best result
+## Earlier holdout-v2 result
 
-The strongest current result is from `Strict / Precision v8` on the RU/EN holdout v2 splits.
+The strongest earlier holdout-v2 result used `Strict / Precision v8` on RU/EN 40-case splits.
 
 | Split | Method | Pass rate ↑ | Wrong intent inference ↓ | Unnecessary clarification ↓ |
 |---|---:|---:|---:|---:|
@@ -100,13 +147,15 @@ The strongest current result is from `Strict / Precision v8` on the RU/EN holdou
 | EN holdout v2 | No prompt baseline | 47.5% | 32.5% | **10.0%** |
 | EN holdout v2 | Strict / Precision v8 | **72.5%** | **22.5%** | **10.0%** |
 
-The main result is that `Strict / Precision v8` improves pass rate and reduces wrong intent inference on both RU and EN holdout splits, while keeping unnecessary clarification low.
+The earlier result showed that `Strict / Precision v8` improved pass rate and reduced wrong intent inference on both RU and EN holdout splits, while keeping unnecessary clarification low.
 
-## Tested intervention
+## Tested interventions
 
-The current best tested intervention is:
+Current and historical interventions include:
 
-- `baselines/strict_v8/strict.txt`
+- `baselines/strict_v13_unseen_pending/strict.txt` — current v0.8 English champion.
+- `baselines/strict_v15_metadata_grounded/strict.txt` — experimental branch, not selected as v0.8 champion.
+- `baselines/strict_v8/strict.txt` — earlier holdout-v2 intervention.
 
 The baseline comparison is:
 
@@ -116,7 +165,7 @@ The baseline comparison is:
 
 ## Main published result
 
-Primary published runs:
+Primary earlier published runs:
 
 - English mirror: `results/holdout-v2-v8-40/en/`
 - Russian source track: `results/holdout-v2-v8-40/ru/`
@@ -180,7 +229,7 @@ Earlier holdout runs are also preserved:
 
 The strongest benchmark-supported claim is narrow and practical:
 
-**assistant behavior can be made measurably better on wrong-intent-inference cases through an optional strict clarify-first mode, especially for quoted replies, corrections, and context-sensitive follow-ups.**
+**assistant behavior can be made measurably better on wrong-intent-inference cases through a stricter action-selection policy, especially for quoted replies, corrections, short fragments, and context-sensitive follow-ups.**
 
 This repository does **not** support a broad claim that strict prompting is universally better for all conversations.
 
@@ -192,13 +241,25 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run the main English mirror evaluation:
+Run the current English v0.8 evaluation:
+
+```bash
+python run_eval.py --dataset benchmark/data/v0.3/dev_en_v3.jsonl --strict-prompt baselines/strict_v13_unseen_pending/strict.txt --output-dir results/v0.8-dev-en-full-80-v13-unseen-pending
+```
+
+Analyze the v0.8 clarification trade-off:
+
+```bash
+python tools/analyze_clarification_tradeoff.py --case-results results/v0.8-dev-en-full-80-v13-unseen-pending/case_results.csv --dataset benchmark/data/v0.3/dev_en_v3.jsonl --output-md reports/v0.8/dev_en_full_80_v13_unseen_pending_tradeoff.md --output-json reports/v0.8/dev_en_full_80_v13_unseen_pending_tradeoff.json
+```
+
+Run the earlier English mirror evaluation:
 
 ```bash
 python run_eval.py --dataset benchmark/data/holdout_cases_en_v2.jsonl --output-dir results/holdout-en-v2-v8-40
 ```
 
-Run the Russian source-track evaluation:
+Run the earlier Russian source-track evaluation:
 
 ```bash
 python run_eval.py --dataset benchmark/data/holdout_cases_ru_v2.jsonl --output-dir results/holdout-ru-v2-v8-40
@@ -254,7 +315,8 @@ python tools/compare_dataset_splits.py benchmark/data/v0.3/dev_en_v3.jsonl bench
 - the English sets are translated mirrors of the Russian source, not independently authored benchmarks;
 - cross-language comparisons are informative, but not perfectly apples-to-apples;
 - token usage in this prototype is inflated by the explicit behavior prompt and should not be treated as a product-ready cost estimate;
-- `short_fragment` remains the weakest category.
+- v13 has not yet reached the stronger 75% full-set action-accuracy target;
+- `short_fragment`, `ask_clarification`, and `continue_pending_task` boundary cases remain the main weak spots.
 
 ## Discussion
 
