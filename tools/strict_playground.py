@@ -87,13 +87,16 @@ def call_model(
 def print_help() -> None:
     print(
         "\nCommands:\n"
-        "  /help              show this help\n"
-        "  /mode strict       switch to Strict / Precision prompt\n"
-        "  /mode baseline     switch to no-prompt baseline\n"
-        "  /reset             clear conversation history\n"
-        "  /history           show current conversation history\n"
-        "  /exit              quit\n"
-        "\nType normal messages to chat with the selected mode.\n"
+        "  /help                    show this help\n"
+        "  /mode strict             switch to Strict / Precision prompt\n"
+        "  /mode baseline           switch to no-prompt baseline\n"
+        "  /assistant <message>     add an assistant context turn without calling the API\n"
+        "  /user <message>          add a user context turn without calling the API\n"
+        "  /reset                   clear conversation history\n"
+        "  /history                 show current conversation history\n"
+        "  /exit                    quit\n"
+        "\nType normal messages to send a user message and get a model response.\n"
+        "Use /assistant first when testing pending-task behavior.\n"
     )
 
 
@@ -105,6 +108,15 @@ def print_history(messages: list[dict[str, str]]) -> None:
     for index, message in enumerate(messages, start=1):
         print(f"[{index}] {message['role']}: {message['content']}")
     print()
+
+
+def add_context_turn(messages: list[dict[str, str]], role: str, content: str) -> None:
+    content = content.strip()
+    if not content:
+        print(f"/{role} requires text\n")
+        return
+    messages.append({"role": role, "content": content})
+    print(f"added {role} context turn\n")
 
 
 def main() -> None:
@@ -146,6 +158,12 @@ def main() -> None:
             continue
         if raw == "/history":
             print_history(messages)
+            continue
+        if raw.startswith("/assistant "):
+            add_context_turn(messages, "assistant", raw.split(maxsplit=1)[1])
+            continue
+        if raw.startswith("/user "):
+            add_context_turn(messages, "user", raw.split(maxsplit=1)[1])
             continue
         if raw.startswith("/mode "):
             requested_mode = raw.split(maxsplit=1)[1].strip().lower()
