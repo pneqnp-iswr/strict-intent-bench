@@ -64,6 +64,22 @@ On the English v0.3 development set of 80 cases, Strict / Precision v13 improved
 
 Do not read this as a claim that strict prompting is universally better or that wrong intent inference is solved.
 
+## OpenAI-style eval adapter
+
+The repository now includes an adapter for exporting benchmark cases as OpenAI-eval-style JSONL items.
+
+- Adapter guide: [OpenAI Evals Adapter](docs/openai_evals_adapter.md)
+- Export tool: `tools/export_openai_eval_items.py`
+- Exported EN v0.3 items: `benchmark/data/openai_eval_items/dev_en_v3_items.jsonl`
+
+Export command:
+
+```bash
+python tools/export_openai_eval_items.py --dataset benchmark/data/v0.3/dev_en_v3.jsonl --output benchmark/data/openai_eval_items/dev_en_v3_items.jsonl
+```
+
+This does not replace the local runner. It makes the benchmark easier to inspect and adapt to an eval-first model optimization workflow.
+
 ## Documentation
 
 Core project docs:
@@ -73,6 +89,7 @@ Core project docs:
 - [Error taxonomy](docs/error_taxonomy.md)
 - [Annotation guidelines](docs/annotation_guidelines.md)
 - [Case quality checklist](docs/case_quality_checklist.md)
+- [OpenAI Evals Adapter](docs/openai_evals_adapter.md)
 - [Manual audit protocol](benchmark/manual/audit_protocol_v0.6.md)
 - [No-API reproduction guide](benchmark/manual/no_api_reproduction.md)
 - [Roadmap](ROADMAP.md)
@@ -87,6 +104,7 @@ No-API development and inspection tools:
 - `tools/audit_dataset_quality.py` flags weak metadata, duplicate cases, broad acceptable actions, and suspicious action/context combinations.
 - `tools/compare_dataset_splits.py` compares structural balance across two JSONL splits.
 - `tools/export_demo_cases.py` rebuilds the static demo data.
+- `tools/export_openai_eval_items.py` exports benchmark cases as OpenAI-eval-style JSONL items.
 - `tools/make_manual_eval_sheet.py`, `tools/score_manual_eval.py`, and `tools/heuristic_grade_manual_eval.py` support manual/no-API evaluation workflows.
 - `tools/build_prompt_synthesis_pack.py` builds evidence packs for prompt-design audits.
 - `tools/export_case_failures.py` joins graded failures with dataset metadata for forensic analysis.
@@ -110,6 +128,7 @@ strict-intent-bench/
 │  ├─ demo.html
 │  ├─ dataset_card.md
 │  ├─ error_taxonomy.md
+│  ├─ openai_evals_adapter.md
 │  └─ annotation_guidelines.md
 ├─ reports/
 ├─ results/
